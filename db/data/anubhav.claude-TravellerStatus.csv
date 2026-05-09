@@ -1,0 +1,5 @@
+code;name;descr
+A;Active;Active traveller with full system access
+I;Inactive;Inactive traveller account
+S;Suspended;Suspended traveller account pending review
+P;Pending;Pending verification and onboarding

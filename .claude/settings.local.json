@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch"
+      "WebFetch",
+      "PowerShell(New-Item *)",
+      "Bash(git add *)"
     ]
   }
 }

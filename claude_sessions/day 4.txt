@@ -1,0 +1,546 @@
+ ▐▛███▜▌   Claude Code v2.1.138
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    C:\claude\anubhav-claude
+
+❯ /commit                                                                       
+
+● Skill(commit)
+  ⎿  Successfully loaded skill
+
+● Let me check the current state of the repository.
+
+● Bash(git status)
+  ⎿  On branch main
+     nothing to commit, working tree clean
+
+● Bash(git diff)
+  ⎿  (No output)
+
+● The working tree is clean — there are no changes to commit. Everything is
+  already committed (last commit: f28e7b1 chore: day 4 first CAP project commit 
+  via commit command).
+
+  If you have new files or edits you'd like to commit, make those changes first
+  and then run /commit again.
+
+✻ Brewed for 16s
+
+! git push origin main                                                          
+  ⎿  To https://github.com/anubhavtrainings-official/claude_sap_anubhav_fre
+     e.git
+      * [new branch]      main -> main
+
+※ recap: No changes were pending — the repo was already clean. Next step is to make your edits, then run /commit again. (disable recaps in /config)
+
+❯ Create a SAP Cloud Application Programming Model (CAP) data model file        
+  named schema.cds with the following specifications:                           
+                                                                                
+  NAMESPACE: anubhav.claude                                                     
+                                                                                
+  IMPORTS:                                                                      
+  - Import 'sap' from '@sap/cds/common'                                         
+  - Import cuid, Currency, and managed from '@sap/cds/common'                   
+                                                                                
+  CODE LIST ENTITIES (extending sap.common.CodeList):                           
+                                                                                
+  1. Entity "AddressTypes" with:                                                
+     - key code: String(1)                                                      
+     - This will store values like Home, Office, Permanent, Temporary           
+                                                                                
+  2. Entity "TravellerStatus" with:                                             
+     - key code: String(1)                                                      
+     - This will store traveller statuses like Active, Inactive, Suspended      
+                                                                                
+  TYPE DEFINITIONS:                                                             
+  - AddressType: Association to AddressTypes                                    
+  - Status: Association to TravellerStatus                                      
+                                                                                
+  MAIN ENTITIES:                                                                
+                                                                                
+  3. Entity "Destinations" using cuid:                                          
+     - address: String(255)                                                     
+     - city: String(40)                                                         
+     - postalCode: String(8)                                                    
+     - country: String(40)                                                      
+     - traveller: Association to Travellers                                     
+                                                                                
+  4. Entity "Travellers" using cuid and managed:                                
+     - userName: String(255) with @mandatory annotation                         
+     - firstName: String(255)                                                   
+     - lastName: String(255)                                                    
+     - contacts: Composition of many Contacts on contacts.traveller = $self     
+     - gender: String(10)                                                       
+     - age: Integer                                                             
+     - status: Status with default value 'A'                                    
+     - createdBy: String(40)                                                    
+     - address: Composition of Destinations                                     
+     - vacations: Composition of many Vacations on vacations.traveller = $self  
+     - Annotate Travellers entity with: modifiedAt @odata.etag                  
+                                                                                
+  5. Entity "Contacts" using cuid:                                              
+     - type: AddressType                                                        
+     - address: String(255)                                                     
+     - traveller: Association to Travellers                                     
+                                                                                
+  6. Entity "Vacations" using cuid:                                             
+     - name: String(255)                                                        
+     - budget: Decimal(10,2)                                                    
+     - currency: Currency                                                       
+     - description: String(1024)                                                
+     - startsAt: DateTime                                                       
+     - endsAt: DateTime                                                         
+     - traveller: Association to Travellers                                     
+  ⎿  ⧉ Selected 58 lines from material\day4\2_prompt_for_new_schema.md in Visual Studio Code
+
+● Let me check the existing project structure before creating the file.
+
+  Searched for 3 patterns, listed 1 directory (ctrl+o to expand)
+
+● The db/ folder exists and is empty. I'll create schema.cds there now.
+
+● Write(db\schema.cds)
+  ⎿  Wrote 63 lines to db\schema.cds
+       2 namespace anubhav.claude;
+       3 using { sap }                        from '@sap/cds/common';
+       4 using { cuid, Currency, managed }    from '@sap/cds/common';
+       5 
+       6 // ─── Code List Entities ──────────────────────────────────────
+       7 ─────────────────
+       8 entity AddressTypes : sap.common.CodeList {
+       9     key code : String(1); // H=Home, O=Office, P=Permanent, T=Te
+         mporary
+      10 }
+     … +59 lines (ctrl+o to expand)
+
+● db/schema.cds is created. Here's a summary of what was generated:
+
+  Namespace: anubhav.claude
+
+  Code List Entities (extend sap.common.CodeList, inheriting name/descr
+  localization):
+  - AddressTypes — key code: String(1)
+  - TravellerStatus — key code: String(1)
+
+  Type Definitions:
+  - AddressType → Association to AddressTypes
+  - Status → Association to TravellerStatus
+
+  Main Entities:
+
+  Entity: Destinations
+  Mixins: cuid
+  Key fields: auto UUID + address/city/postalCode/country/traveller
+  ────────────────────────────────────────
+  Entity: Travellers
+  Mixins: cuid, managed
+  Key fields: UUID + all traveller fields, status defaults to 'A'
+  ────────────────────────────────────────
+  Entity: Contacts
+  Mixins: cuid
+  Key fields: UUID + type/address/traveller
+  ────────────────────────────────────────
+  Entity: Vacations
+  Mixins: cuid
+  Key fields: UUID + name/budget/currency/description/dates/traveller
+
+  Note on createdBy: The managed aspect already injects createdBy: String(255).
+  The spec defines it as String(40) — if cds watch raises a "Duplicate element"
+  error, remove the explicit createdBy line from Travellers (the managed one
+  will still be present). All other fields are clean.
+
+✻ Sautéed for 1m 4s
+
+! npm ins                                                                       
+  ⎿  up to date, audited 114 packages in 1s
+
+     26 packages are looking for funding
+     … +3 lines (ctrl+o to expand)
+
+! cds deploy --to sqlite                                                        
+  ⎿  /> successfully deployed to db.sqlite
+
+❯ Enhance my @db/schema.cds file with following entities at the end             
+                                                                                
+  1. Entity "Roles" extending sap.common.CodeList:                              
+     - key code: String(10)                                                     
+     - Will store role values: ADMIN, TRAVELLER, AGENT                          
+                                                                                
+  2. Entity "AppUsers" using cuid and managed:                                  
+     - userName: String(100) with @mandatory annotation                         
+     - email: String(255) with @mandatory annotation                            
+     - fullName: String(255)                                                    
+     - role: Association to Roles                                               
+     - isActive: Boolean default true                                           
+     - lastLoginAt: DateTime                                                    
+     - traveller: Association to Travellers (optional link if user is a         
+  traveller)                                                                    
+                                                                                
+  Generate the complete schema.cds file with proper syntax, indentation,        
+  and SAP CAP best practices.                                                   
+  If there are merge conflicts during pull, STOP and ask me how to proceed.     
+  ⎿  Read db\schema.cds (64 lines)
+  ⎿  ⧉ Selected 18 lines from material\day4\3_prompt_for_edit_schema.md in Visual Studio Code
+
+● I'll read the current file and append the two new entities.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(db\schema.cds)
+  ⎿  Added 18 lines
+      61      endsAt      : DateTime;
+      62      traveller   : Association to Travellers;
+      63  }
+      64 +                                                               
+      65 +// ─── User & Role Entities ───────────────────────────────────
+         +──────────────────                                             
+      66 +                                                               
+      67 +entity Roles : sap.common.CodeList {                           
+      68 +    key code : String(10); // ADMIN, TRAVELLER, AGENT          
+      69 +}                                                              
+      70 +                                                               
+      71 +entity AppUsers : cuid, managed {                              
+      72 +    @mandatory                                                 
+      73 +    userName    : String(100);                                 
+      74 +    @mandatory                                                 
+      75 +    email       : String(255);                                 
+      76 +    fullName    : String(255);                                 
+      77 +    role        : Association to Roles;                        
+      78 +    isActive    : Boolean default true;                        
+      79 +    lastLoginAt : DateTime;                                    
+      80 +    traveller   : Association to Travellers;                   
+      81 +}                                                              
+
+● Two entities added to db/schema.cds:
+
+  - Roles — extends sap.common.CodeList with key code: String(10), inheriting
+  localized name/descr fields (for ADMIN, TRAVELLER, AGENT values).
+  - AppUsers — uses cuid, managed mixins with @mandatory on userName and email,
+  isActive defaults to true, and an optional traveller back-link to Travellers.
+✻ Cooked for 17s
+
+! cds deploy --to sqlite                                                        
+  ⎿  /> successfully deployed to db.sqlite
+
+※ recap: Building a SAP CAP data model. We created and enhanced db/schema.cds with traveller, destination, contact, vacation, role, and user entities. Next: commit and deploy the updated schema. (disable recaps in /config)
+
+❯ Generate test data CSV files for a SAP CAP application with namespace         
+  "anubhav.claude" for travel management. Create the following CSV files        
+  inside a folder called "db/data/" following SAP CAP naming convention         
+  (namespace-EntityName.csv).                                                   
+                                                                                
+  REQUIRED CSV FILES:                                                           
+                                                                                
+  1. File: anubhav.claude-AddressTypes.csv                                      
+     - Columns: code, name, descr                                               
+     - Generate 4 records:                                                      
+       * H, Home, Home address for personal communication                       
+       * O, Office, Work address for business communication                     
+       * P, Permanent, Permanent residential address                            
+       * T, Temporary, Temporary stay address                                   
+                                                                                
+  2. File: anubhav.claude-AddressTypes_texts.csv                                
+     - Columns: locale, code, name, descr                                       
+     - Generate localization records for English (en) and German (de)           
+       for all 4 address types                                                  
+                                                                                
+  3. File: anubhav.claude-TravellerStatus.csv                                   
+     - Columns: code, name, descr                                               
+     - Generate 4 records:                                                      
+       * A, Active, Active traveller                                            
+       * I, Inactive, Inactive traveller                                        
+       * S, Suspended, Suspended traveller                                      
+       * P, Pending, Pending verification                                       
+                                                                                
+  4. File: anubhav.claude-Roles.csv                                             
+     - Columns: code, name, descr                                               
+     - Generate 3 records:                                                      
+       * ADMIN, Administrator, Full system access                               
+       * TRAVELLER, Traveller, Self-service traveller access                    
+       * AGENT, Travel Agent, Agent access for managing travellers              
+                                                                                
+  5. File: anubhav.claude-Travellers.csv                                        
+     - Columns: ID, userName, firstName, lastName, gender, age, status_code,    
+       createdBy, createdAt, modifiedAt                                         
+     - Generate 10 diverse traveller records with:                              
+       * Use UUID format for ID (e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890)    
+       * Mix of male and female names from different cultures (Indian,          
+         American, European, Asian)                                             
+       * Ages between 22 and 65                                                 
+       * Mix of statuses (mostly Active, some Inactive)                         
+       * createdBy as email format                                              
+       * createdAt and modifiedAt as ISO 8601 timestamps                        
+                                                                                
+  6. File: anubhav.claude-Contacts.csv                                          
+     - Columns: ID, type_code, address, traveller_ID                            
+     - Generate 20 contact records (2 per traveller)                            
+     - Mix of email addresses and phone numbers                                 
+     - Reference traveller_ID from Travellers.csv                               
+     - Mix of all 4 address types (H, O, P, T)                                  
+                                                                                
+  7. File: anubhav.claude-Destinations.csv                                      
+     - Columns: ID, address, city, postalCode, country, traveller_ID            
+     - Generate 15 destination records                                          
+     - Mix of international cities: Paris, Tokyo, New York, Dubai,              
+       Singapore, London, Sydney, Bangkok, Rome, Bali                           
+     - Realistic addresses and postal codes                                     
+     - Reference traveller_ID from Travellers.csv                               
+                                                                                
+  8. File: anubhav.claude-Vacations.csv                                         
+     - Columns: ID, name, budget, currency_code, description, startsAt,         
+       endsAt, traveller_ID                                                     
+     - Generate 15 vacation records with:                                       
+       * Creative vacation names like "Paris Romance Tour", "Tokyo Cherry       
+         Blossom Trip", "Bali Beach Getaway"                                    
+       * Budgets between 1500.00 and 25000.00                                   
+       * Mix of currencies: USD, EUR, INR, GBP, JPY, AUD                        
+       * Detailed descriptions (50-100 words each)                              
+       * Future dates spanning next 12 months                                   
+       * Trip duration between 3 and 21 days                                    
+       * Reference traveller_ID from Travellers.csv                             
+                                                                                
+  9. File: anubhav.claude-AppUsers.csv                                          
+     - Columns: ID, userName, email, fullName, role_code, isActive,             
+       lastLoginAt, traveller_ID, createdBy, createdAt, modifiedAt              
+     - Generate 12 app user records:                                            
+       * 2 ADMIN users                                                          
+       * 3 AGENT users                                                          
+       * 7 TRAVELLER users (linked to existing traveller_ID)                    
+       * Realistic email addresses                                              
+       * Recent lastLoginAt timestamps                                          
+       * Mix of active and inactive users                                       
+                                                                                
+  IMPORTANT GUIDELINES:                                                         
+  - Use semicolon (;) as CSV separator (SAP CAP standard)                       
+  - First row must contain column headers                                       
+  - Use UUID format consistently across related entities                        
+  - Ensure referential integrity (foreign keys must exist in parent entities)   
+  - Use ISO 8601 format for all DateTime fields (YYYY-MM-DDTHH:mm:ssZ)          
+  - Provide realistic, diverse, and culturally varied sample data               
+  - Ensure data tells a coherent story (e.g., a traveller with vacations,       
+    contacts, and destinations that make logical sense)                         
+  ⎿  ⧉ Selected 95 lines from material\day4\4_prompt_for_data_gen.md in Visual Studio Code
+
+● I'll create the db/data/ directory and all 9 CSV files in parallel.
+
+● PowerShell(New-Item -ItemType Directory -Path
+            "C:\claude\anubhav-claude\db\data" -Force)
+  ⎿      Directory: C:\claude\anubhav-claude\db
+     … +3 lines (ctrl+o to expand)
+
+● Write(db\data\anubhav.claude-AddressTypes.csv)
+  ⎿  Wrote 5 lines to db\data\anubhav.claude-AddressTypes.csv
+      1 code;name;descr
+      2 H;Home;Home address for personal communication
+      3 O;Office;Work address for business communication
+      4 P;Permanent;Permanent residential address
+      5 T;Temporary;Temporary stay address
+
+● Write(db\data\anubhav.claude-AddressTypes_texts.csv)
+  ⎿  Wrote 9 lines to db\data\anubhav.claude-AddressTypes_texts.csv
+      1 locale;code;name;descr
+      2 en;H;Home;Home address for personal communication
+      3 en;O;Office;Work address for business communication
+      4 en;P;Permanent;Permanent residential address
+      5 en;T;Temporary;Temporary stay address
+      6 de;H;Zuhause;Heimadresse fuer persoenliche Kommunikation
+      7 de;O;Buero;Geschaeftsadresse fuer berufliche Kommunikation
+      8 de;P;Dauerhaft;Dauerhafter Wohnsitz
+      9 de;T;Voruebergehend;Voruebergehende Aufenthaltsadresse
+
+● Write(db\data\anubhav.claude-TravellerStatus.csv)
+  ⎿  Wrote 5 lines to db\data\anubhav.claude-TravellerStatus.csv
+      1 code;name;descr
+      2 A;Active;Active traveller with full system access
+      3 I;Inactive;Inactive traveller account
+      4 S;Suspended;Suspended traveller account pending review
+      5 P;Pending;Pending verification and onboarding
+
+● Write(db\data\anubhav.claude-Roles.csv)
+  ⎿  Wrote 4 lines to db\data\anubhav.claude-Roles.csv
+      1 code;name;descr
+      2 ADMIN;Administrator;Full system access with user and configuratio
+        n management
+      3 TRAVELLER;Traveller;Self-service traveller access for bookings an
+        d profile
+      4 AGENT;Travel Agent;Agent access for managing travellers and booki
+        ngs
+
+● Write(db\data\anubhav.claude-Travellers.csv)
+  ⎿  Wrote 11 lines to db\data\anubhav.claude-Travellers.csv
+        reatedAt;modifiedAtme;lastName;gender;age;status_code;createdBy;c
+      2 c1c1c1c1-0001-4111-8111-111111111101;raj.sharma@example.com;Raj;S
+        T10:30:00Z;35;A;admin@anubhav.com;2025-01-15T08:00:00Z;2025-03-20
+      3 c1c1c1c1-0002-4111-8111-111111111102;priya.patel@example.com;Priy
+        4-10T14:00:00Z;28;A;admin@anubhav.com;2025-02-01T09:00:00Z;2025-0
+      4 c1c1c1c1-0003-4111-8111-111111111103;john.williams@example.com;Jo
+        -03-15T11:00:00Z;45;A;admin@anubhav.com;2025-01-20T10:00:00Z;2025
+      5 c1c1c1c1-0004-4111-8111-111111111104;emily.johnson@example.com;Em
+        25-04-25T09:00:00Z;32;A;admin@anubhav.com;2025-02-10T11:00:00Z;20
+      6 c1c1c1c1-0005-4111-8111
+     … +21 lines (ctrl+o to expand)
+
+● Write(db\data\anubhav.claude-Contacts.csv)
+  ⎿  Wrote 21 lines to db\data\anubhav.claude-Contacts.csv
+      2 c2c2c2c2-0001-4222-8222-222222222201;H;42 Gandhi Nagar, New Delhi
+         110001, India;c1c1c1c1-0001-4111-8111-111111111101
+      3 c2c2c2c2-0002-4222-8222-222222222202;O;Tower B DLF Cyber City, Gu
+      4 c2c2c2c2-0003-4222-8222-222222222203;H;15 Marine Drive, Mumbai 40
+        0020, India;c1c1c1c1-0002-4111-8111-111111111102
+      5 c2c2c2c2-0004-4222-8222-222222222204;P;Bandra Kurla Complex, Mumb
+      6 c2c2c2c2-0005-4222-8222-222222222205;H;250 Oak Street, Boston MA 
+        02110, USA;c1c1c1c1-0003-4111-8111-111111111103
+      7 c2c2c2c2-0006-4222-8222-222222222206;O;100 Congress Ave, Austin T
+        X 787
+     … +31 lines (ctrl+o to expand)
+
+● Write(db\data\anubhav.claude-Destinations.csv)
+  ⎿  Wrote 16 lines to db\data\anubhav.claude-Destinations.csv
+      2 c3c3c3c3-0001-4333-8333-333333333301;123 Rue de Rivoli;Paris;7500
+        1;France;c1c1c1c1-0001-4111-8111-111111111101
+      3 c3c3c3c3-0002-4333-8333-333333333302;56 Sukhumvit Road;Bangkok;10
+      4 c3c3c3c3-0003-4333-8333-333333333303;Kuta Beach Road;Bali;80361;I
+        ndonesia;c1c1c1c1-0002-4111-8111-111111111102
+      5 c3c3c3c3-0004-4333-8333-333333333304;MG Road;Bangalore;560001;Ind
+      6 c3c3c3c3-0005-4333-8333-333333333305;350 Fifth Avenue;New York;10
+        118;USA;c1c1c1c1-0003-4111-8111-111111111103
+      7 c3c3c3c3-0006-4333-8333-333333333306;100 Queen Street;Sydney;2000
+        ;Australia;c1c1c1c1-0003-
+     … +21 lines (ctrl+o to expand)
+
+● Write(db\data\anubhav.claude-Vacations.csv)
+  ⎿  Wrote 16 lines to db\data\anubhav.claude-Vacations.csv
+        r_IDame;budget;currency_code;description;startsAt;endsAt;travelle
+      2 c4c4c4c4-0001-4444-8444-444444444401;Paris Romance Tour;5000.00;E
+        UR;Experience the magic of Paris with guided tours of the Eiffel 
+        river cruises at sunset, world-class French cuisine and strolls a
+        long the Champs-Elysees. Includes visits to Montmartre artists qu
+        arter and exclusive wine tasting sessions in historic Parisian ce
+        11-8111-111111111101:00:00Z;2026-06-14T20:00:00Z;c1c1c1c1-0001-41
+      3 c4c4c4c4-0002-4444-8444-444444444402;Bangkok Street Food Journey;
+        95000.00;INR;Dive deep into Thailand's vibrant capital with an im
+        mersive street
+     … +107 lines (ctrl+o to expand)
+
+● Write(db\data\anubhav.claude-AppUsers.csv)
+  ⎿  Wrote 13 lines to db\data\anubhav.claude-AppUsers.csv
+        er_ID;createdBy;createdAt;modifiedAt;isActive;lastLoginAt;travell
+      2 c5c5c5c5-0001-4555-8555-555555555501;admin.super;superadmin@anubh
+        av.com;Super Administrator;ADMIN;true;2026-05-08T09:15:00Z;;syste
+        m;2024-12-01T08:00:00Z;2026-05-08T09:15:00Z
+      3 c5c5c5c5-0002-4555-8555-555555555502;admin.sarah;sarah.thompson@a
+        ;2024-12-01T08:00:00Z;2026-05-09T07:45:00Z05-09T07:45:00Z;;system
+      4 c5c5c5c5-0003-4555-8555-555555555503;agent.michael;michael.brown@
+        anubhav.com;Michael Brown;AGENT;true;2026-05-08T11:30:00Z;;admin@
+        anubhav.com;2025-01-10T09:00:00Z;2026-05-08T11:30:00Z
+      5 c5c5c5c5-0004-4555-8555-555555555504;agent.chen;chen.yu@a
+     … +35 lines (ctrl+o to expand)
+
+● All 9 CSV files created in db/data/. Here's the summary:
+
+  File: anubhav.claude-AddressTypes.csv
+  Records: 4
+  Notes: H, O, P, T
+  ────────────────────────────────────────
+  File: anubhav.claude-AddressTypes_texts.csv
+  Records: 8
+  Notes: EN + DE localization
+  ────────────────────────────────────────
+  File: anubhav.claude-TravellerStatus.csv
+  Records: 4
+  Notes: A, I, S, P
+  ────────────────────────────────────────
+  File: anubhav.claude-Roles.csv
+  Records: 3
+  Notes: ADMIN, TRAVELLER, AGENT
+  ────────────────────────────────────────
+  File: anubhav.claude-Travellers.csv
+  Records: 10
+  Notes: Indian, American, European, Asian mix
+  ────────────────────────────────────────
+  File: anubhav.claude-Contacts.csv
+  Records: 20
+  Notes: 2 per traveller, all 4 address types used
+  ────────────────────────────────────────
+  File: anubhav.claude-Destinations.csv
+  Records: 15
+  Notes: Paris, Tokyo, New York, Dubai, Bali, etc.
+  ────────────────────────────────────────
+  File: anubhav.claude-Vacations.csv
+  Records: 15
+  Notes: USD/EUR/GBP/JPY/INR/AUD/CNY, future dates
+  ────────────────────────────────────────
+  File: anubhav.claude-AppUsers.csv
+  Records: 12
+  Notes: 2 ADMIN + 3 AGENT + 7 TRAVELLER (linked)
+
+  Key design decisions:
+  - Semicolons (;) as delimiter throughout
+  - UUIDs are structured (c1...01 = Traveller 1, c2... = Contacts, etc.) for
+  easy cross-referencing
+  - CNY used for the Shanghai vacation since SAP CDS ships with it in the
+  sap.common.Currencies code list
+  - ADMIN/AGENT users have empty traveller_ID (foreign key left blank = NULL)
+  - All descriptions are semicolon-free to avoid CSV parsing issues
+
+✻ Cogitated for 4m 12s
+
+! cds deploy --to sqlite                                                        
+  ⎿    > init from db\data\anubhav.claude-Vacations.csv
+       > init from db\data\anubhav.claude-TravellerStatus.csv
+       > init from db\data\anubhav.claude-Travellers.csv
+       > init from db\data\anubhav.claude-Roles.csv
+       > init from db\data\anubhav.claude-Destinations.csv
+       > init from db\data\anubhav.claude-Contacts.csv
+       > init from db\data\anubhav.claude-AppUsers.csv
+       > init from db\data\anubhav.claude-AddressTypes_texts.csv
+       > init from db\data\anubhav.claude-AddressTypes.csv
+     /> successfully deployed to db.sqlite
+
+❯ /context 
+  ⎿  Context Usage
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛀   Sonnet 4.6
+     ⛀ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁   claude-sonnet-4-6
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛶ ⛶ ⛶   51.2k/200k tokens (26%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ 
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   Estimated usage by category
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System prompt: 6.2k tokens (3.1%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System tools: 13k tokens (6.5%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Memory files: 456 tokens (0.2%)
+     ⛶ ⛶ ⛶ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Skills: 734 tokens (0.4%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Messages: 31.6k tokens (15.8%)
+                           ⛶ Free space: 115.1k (57.5%)
+                           ⛝ Autocompact buffer: 33k tokens (16.5%)
+
+     MCP tools · /mcp (loaded on-demand)
+
+     Available
+     ├ mcp__claude_ai_Gmail__authenticate
+     ├ mcp__claude_ai_Gmail__complete_authentication
+     ├ mcp__claude_ai_Google_Calendar__authenticate
+     ├ mcp__claude_ai_Google_Calendar__complete_authentication
+     ├ mcp__claude_ai_Google_Drive__authenticate
+     ├ mcp__claude_ai_Google_Drive__complete_authentication
+     ├ mcp__ide__executeCode
+     └ mcp__ide__getDiagnostics
+
+     Memory files · /memory
+     └ CLAUDE.md: 456 tokens
+
+     Skills · /skills
+
+     Project
+     └ commit: 13 tokens
+
+     ├ claude-api: 189 tokens
+     ├ update-config: 176 tokens
+     ├ schedule: 95 tokens
+     ├ loop: 85 tokens
+     ├ keybindings-help: 61 tokens
+     ├ fewer-permission-prompts: 47 tokens
+     ├ simplify: 23 tokens
+     ├ security-review: 22 tokens
+     ├ init: 16 tokens
+     └ review: 7 tokens
+
+❯ /usage 
+  ⎿  Settings dialog dismissed
