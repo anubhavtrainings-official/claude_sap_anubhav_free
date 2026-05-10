@@ -4,7 +4,7 @@ after each step.
 
 PROJECT CONTEXT:
 - Namespace: anubhav.claude
-- Current schema file: db/schema.cds
+- Current schema file: @db/schema.cds
 - This is a Vacation & Traveller Management application
 
 ═══════════════════════════════════════════════════════════════════

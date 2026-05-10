@@ -3,7 +3,11 @@
     "allow": [
       "WebFetch",
       "PowerShell(New-Item *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git pull *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(npx cds *)"
     ]
   }
 }
