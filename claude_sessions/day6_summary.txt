@@ -1,0 +1,60 @@
+ ▐▛███▜▌   Claude Code v2.1.138
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    C:\claude\anubhav-claude
+
+✻ Conversation compacted (ctrl+o for history)
+
+
+❯ /compact                                                                      
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Read screenshot.js (42 lines)
+  ⎿  Referenced file db-design.html
+  ⎿  Read package.json (16 lines)
+  ⎿  Read db\i18n\i18n_hi.properties (50 lines)
+  ⎿  Read db\i18n\i18n_de.properties (50 lines)
+
+❯ /context 
+  ⎿  Context Usage
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛀   Sonnet 4.6
+     ⛀ ⛁ ⛁ ⛁ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   claude-sonnet-4-6
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   25.9k/200k tokens (13%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ 
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   Estimated usage by category
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System prompt: 6.3k tokens (3.1%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ System tools: 12.9k tokens (6.5%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Memory files: 456 tokens (0.2%)
+     ⛶ ⛶ ⛶ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Skills: 760 tokens (0.4%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛁ Messages: 5.5k tokens (2.7%)
+                           ⛶ Free space: 141.1k (70.5%)
+                           ⛝ Autocompact buffer: 33k tokens (16.5%)
+
+     MCP tools · /mcp (loaded on-demand)
+
+     Available
+     ├ mcp__claude_ai_Gmail__authenticate
+     ├ mcp__claude_ai_Gmail__complete_authentication
+     ├ mcp__claude_ai_Google_Calendar__authenticate
+     ├ mcp__claude_ai_Google_Calendar__complete_authentication
+     ├ mcp__claude_ai_Google_Drive__authenticate
+     └ mcp__claude_ai_Google_Drive__complete_authentication
+
+     Memory files · /memory
+     └ CLAUDE.md: 456 tokens
+
+     Skills · /skills
+
+     Project
+     ├ cap-add-language: 14 tokens
+     ├ commit: 13 tokens
+     └ cap-lang-check: 12 tokens
+
+     ├ claude-api: 189 tokens
+     ├ update-config: 176 tokens
+     ├ schedule: 95 tokens
+     ├ loop: 85 tokens
+     ├ keybindings-help: 61 tokens
+     ├ fewer-permission-prompts: 47 tokens
+     ├ simplify: 23 tokens
+     ├ security-review: 22 tokens
+     ├ init: 16 tokens
+     └ review: 7 tokens
