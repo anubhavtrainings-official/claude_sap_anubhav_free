@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SAP CAP Database Design — Vacation &amp; Traveller Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(150deg, #f8fafc 0%, #e2e8f0 100%);
+      min-height: 100vh;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
+      padding: 44px 60px 36px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 500px; height: 500px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .header-title {
+      font-size: 50px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      padding-right: 320px;
+    }
+    .header-subtitle {
+      font-size: 24px;
+      font-weight: 300;
+      margin-top: 10px;
+      opacity: 0.85;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .header-divider {
+      height: 4px;
+      background: linear-gradient(to right, #f59e0b, #fcd34d, rgba(255,255,255,0.15));
+      margin-top: 28px;
+      border-radius: 2px;
+    }
+
+    /* ── Branding badge (inside header, top-right) ───────────────── */
+    .brand-badge {
+      position: absolute;
+      top: 32px; right: 48px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 14px;
+      padding: 16px 24px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .brand-badge .bm { font-size: 24px; font-weight: 800; letter-spacing: 0.5px; }
+    .brand-badge .bs { font-size: 15px; opacity: 0.85; margin-top: 4px; }
+
+    /* ── Content row ─────────────────────────────────────────────── */
+    .content {
+      display: flex;
+      gap: 24px;
+      padding: 36px 48px;
+      align-items: flex-start;
+    }
+
+    /* ── Shared panel style ──────────────────────────────────────── */
+    .panel {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      border: 1px solid #e2e8f0;
+    }
+    .panel-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    /* ── Stats panel ─────────────────────────────────────────────── */
+    .stats { min-width: 220px; flex-shrink: 0; }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    .stat-row:last-of-type { border-bottom: none; }
+    .stat-label { color: #64748b; }
+    .stat-value { font-weight: 800; font-size: 20px; color: #1e3a8a; }
+    .stat-footer {
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── Diagram panel ───────────────────────────────────────────── */
+    .diagram { flex: 1; min-width: 0; }
+    .mermaid { font-size: 16px !important; }
+    .mermaid svg { max-width: 100%; height: auto; }
+
+    /* ── Legend panel ────────────────────────────────────────────── */
+    .legend { min-width: 210px; flex-shrink: 0; }
+    .leg-section { margin-bottom: 20px; }
+    .leg-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      font-size: 13px;
+      color: #374151;
+    }
+    .leg-dot {
+      width: 15px; height: 15px;
+      border-radius: 4px;
+      border: 2px solid rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+    .leg-badge {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .rel-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 12px;
+      color: #374151;
+    }
+    .rel-code {
+      font-family: monospace;
+      font-size: 11px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #1e3a8a;
+      white-space: nowrap;
+    }
+    .source-files {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 2;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    .footer {
+      background: linear-gradient(90deg, #0f172a 0%, #1e3a8a 40%, #2563eb 75%, #3b82f6 100%);
+      color: white;
+      text-align: center;
+      padding: 34px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        45deg, transparent, transparent 24px,
+        rgba(255,255,255,0.03) 24px, rgba(255,255,255,0.03) 48px
+      );
+    }
+    .footer-icons { font-size: 28px; margin-bottom: 8px; position: relative; }
+    .footer-main {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .footer-sub {
+      font-size: 19px;
+      opacity: 0.75;
+      margin-top: 8px;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────── -->
+<div class="header">
+  <div class="brand-badge">
+    <div class="bm">🎬 Anubhav Trainings</div>
+    <div class="bs">Claude Tutorials</div>
+  </div>
+  <div class="header-title">Vacation &amp; Traveller Management</div>
+  <div class="header-subtitle">SAP CAP · Database Design · Namespace: anubhav.claude</div>
+  <div class="header-divider"></div>
+</div>
+
+<!-- ── Main content ────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- Stats -->
+  <div class="panel stats">
+    <div class="panel-title">📊 Model Stats</div>
+    <div class="stat-row"><span class="stat-label">Total Entities</span><span class="stat-value">8</span></div>
+    <div class="stat-row"><span class="stat-label">Code Lists</span><span class="stat-value">3</span></div>
+    <div class="stat-row"><span class="stat-label">Total Fields</span><span class="stat-value">49</span></div>
+    <div class="stat-row"><span class="stat-label">Relationships</span><span class="stat-value">7</span></div>
+    <div class="stat-row"><span class="stat-label">@title Labels</span><span class="stat-value">35</span></div>
+    <div class="stat-row"><span class="stat-label">Languages</span><span class="stat-value">3</span></div>
+    <div class="stat-footer">Generated: 2026-05-10<br>Namespace: anubhav.claude<br>SAP CAP Node.js</div>
+  </div>
+
+  <!-- ER Diagram -->
+  <div class="panel diagram">
+    <div class="panel-title">🗂️ Entity-Relationship Diagram</div>
+    <div class="mermaid">
+erDiagram
+    TRAVELLERS ||--o{ CONTACTS : "has"
+    TRAVELLERS ||--o| DESTINATIONS : "address"
+    TRAVELLERS ||--o{ VACATIONS : "books"
+    TRAVELLERS }o--|| TRAVELLERSTATUS : "status"
+    CONTACTS }o--|| ADDRESSTYPES : "typed as"
+    APPUSERS }o--|| ROLES : "assigned"
+    APPUSERS }o--o| TRAVELLERS : "linked"
+
+    TRAVELLERS {
+        UUID ID PK
+        String userName "mandatory"
+        String firstName
+        String lastName
+        String gender
+        Integer age
+        String status FK
+        String createdBy
+        DateTime createdAt
+        DateTime modifiedAt
+    }
+
+    CONTACTS {
+        UUID ID PK
+        String type FK
+        String address
+        UUID traveller FK
+    }
+
+    DESTINATIONS {
+        UUID ID PK
+        String address
+        String city
+        String postalCode
+        String country
+    }
+
+    VACATIONS {
+        UUID ID PK
+        String name
+        Decimal budget
+        String currency
+        String description
+        DateTime startsAt
+        DateTime endsAt
+    }
+
+    ADDRESSTYPES {
+        String code PK
+        String name
+        String descr
+    }
+
+    TRAVELLERSTATUS {
+        String code PK
+        String name
+        String descr
+    }
+
+    ROLES {
+        String code PK
+        String name
+        String descr
+    }
+
+    APPUSERS {
+        UUID ID PK
+        String userName "mandatory"
+        String email "mandatory"
+        String fullName
+        String role FK
+        Boolean isActive
+        DateTime lastLoginAt
+    }
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="panel legend">
+    <div class="panel-title">📋 Legend</div>
+
+    <div class="leg-section">
+      <div class="leg-section-title">Entity Types</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#dbeafe;border-color:#93c5fd;"></div> Code Lists</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#dcfce7;border-color:#86efac;"></div> Main Entities</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#fef9c3;border-color:#fde047;"></div> Supporting Entities</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#f3e8ff;border-color:#d8b4fe;"></div> User Management</div>
+    </div>
+
+    <div class="leg-section">
+      <div class="leg-section-title">Field Constraints</div>
+      <div class="leg-item"><span class="leg-badge">PK</span> Primary Key</div>
+      <div class="leg-item"><span class="leg-badge">FK</span> Foreign Key</div>
+      <div class="leg-item"><span class="leg-badge">"mandatory"</span> Required</div>
+    </div>
+
+    <div class="leg-section">
+      <div class="leg-section-title">Cardinality</div>
+      <div class="rel-item"><code class="rel-code">||--o{</code> 1 to many</div>
+      <div class="rel-item"><code class="rel-code">||--o|</code> 1 to 0..1</div>
+      <div class="rel-item"><code class="rel-code">}o--||</code> many to 1</div>
+      <div class="rel-item"><code class="rel-code">}o--o|</code> many to 0..1</div>
+    </div>
+
+    <div class="leg-section">
+      <div class="leg-section-title">Relationship Type</div>
+      <div class="leg-item" style="font-size:12px; flex-direction:column; align-items:flex-start; gap:4px;">
+        <span>◆ Composition (owns)</span>
+        <span style="color:#94a3b8; font-size:11px; padding-left:16px;">TRAVELLERS → CONTACTS<br>TRAVELLERS → DESTINATIONS<br>TRAVELLERS → VACATIONS</span>
+      </div>
+      <div class="leg-item" style="font-size:12px; flex-direction:column; align-items:flex-start; gap:4px; margin-top:6px;">
+        <span>◇ Association (references)</span>
+        <span style="color:#94a3b8; font-size:11px; padding-left:16px;">→ CodeLists<br>APPUSERS → TRAVELLERS</span>
+      </div>
+    </div>
+
+    <div class="leg-section">
+      <div class="leg-section-title">Source Files</div>
+      <div class="source-files">
+        📄 db/schema.cds<br>
+        📄 db/common.cds<br>
+        🌍 db/i18n/i18n.properties<br>
+        🇩🇪 db/i18n/i18n_de.properties<br>
+        🇮🇳 db/i18n/i18n_hi.properties
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- ── Footer ──────────────────────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-icons">📚 🎬 🎓 ▶️</div>
+  <div class="footer-main">Anubhav Trainings — Claude Tutorials</div>
+  <div class="footer-sub">SAP CAP Database Design Tutorial Series</div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontSize: '16px',
+      fontFamily: "'Segoe UI', Arial, sans-serif",
+      primaryColor: '#ffffff',
+      primaryBorderColor: '#1e3a8a',
+      primaryTextColor: '#111827',
+      lineColor: '#374151',
+      background: '#ffffff',
+      mainBkg: '#ffffff',
+      nodeBorder: '#1e3a8a',
+      titleColor: '#1e3a8a',
+      edgeLabelBackground: '#eff6ff',
+      attributeBackgroundColorEven: '#f8fafc',
+      attributeBackgroundColorOdd: '#ffffff',
+    },
+    er: {
+      diagramPadding: 30,
+      layoutDirection: 'TB',
+      minEntityWidth: 180,
+      minEntityHeight: 40,
+      entityPadding: 12,
+      useMaxWidth: false,
+    }
+  });
+
+  // Color-code entity header boxes after Mermaid renders
+  const COLOR_MAP = {
+    'ADDRESSTYPES':    { fill: '#dbeafe', stroke: '#93c5fd' },
+    'TRAVELLERSTATUS': { fill: '#dbeafe', stroke: '#93c5fd' },
+    'ROLES':           { fill: '#dbeafe', stroke: '#93c5fd' },
+    'TRAVELLERS':      { fill: '#dcfce7', stroke: '#86efac' },
+    'VACATIONS':       { fill: '#dcfce7', stroke: '#86efac' },
+    'CONTACTS':        { fill: '#fef9c3', stroke: '#fde047' },
+    'DESTINATIONS':    { fill: '#fef9c3', stroke: '#fde047' },
+    'APPUSERS':        { fill: '#f3e8ff', stroke: '#d8b4fe' },
+  };
+
+  function colorizeEntities() {
+    const svg = document.querySelector('.mermaid svg');
+    if (!svg) return;
+
+    svg.querySelectorAll('text').forEach(textEl => {
+      const name = textEl.textContent.trim().toUpperCase();
+      const scheme = COLOR_MAP[name];
+      if (!scheme) return;
+
+      // Walk up the DOM to find the nearest <rect> sibling
+      let node = textEl.parentElement;
+      for (let i = 0; i < 6 && node; i++) {
+        const rect = node.querySelector('rect');
+        if (rect) {
+          rect.style.fill   = scheme.fill;
+          rect.style.stroke = scheme.stroke;
+          rect.style.strokeWidth = '2.5px';
+          break;
+        }
+        node = node.parentElement;
+      }
+    });
+  }
+
+  // Retry a few times to catch late renders
+  [1500, 3000, 5000].forEach(ms => setTimeout(colorizeEntities, ms));
+</script>
+</body>
+</html>
