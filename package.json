@@ -11,6 +11,6 @@
   },
   "scripts": {
     "start": "cds-serve"
-  },
+  },    
   "private": true
 }

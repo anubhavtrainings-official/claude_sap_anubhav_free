@@ -12,7 +12,11 @@
       "Bash(node *)",
       "Bash(powershell *)",
       "PowerShell(Get-ChildItem \"C:\\\\claude\\\\anubhav-claude\" -Force | Where-Object { $_.Name -ne \"node_modules\" } | Select-Object Name, Attributes)",
-      "PowerShell(Get-ChildItem . -Force | Where-Object { $_.Name -ne \"node_modules\" } | Select-Object Name, Attributes)"
+      "PowerShell(Get-ChildItem . -Force | Where-Object { $_.Name -ne \"node_modules\" } | Select-Object Name, Attributes)",
+      "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-AppUsers.csv\" -Force)",
+      "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-Contacts.csv\" -Force)",
+      "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-Vacations.csv\" -Force)",
+      "Bash(Write-Output \"Deleted obsolete CSV files\")"
     ]
   }
 }
