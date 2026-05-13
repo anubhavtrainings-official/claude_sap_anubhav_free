@@ -26,7 +26,6 @@
 ### 1.1  CatalogService $metadata
 GET {{catalog}}/$metadata
 Accept: application/xml
-Authorization: Bearer {{token}}
 ###
 
 ### 1.2  UserManagement $metadata
