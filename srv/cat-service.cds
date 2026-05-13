@@ -1,9 +1,7 @@
 using { anubhav.claude as db }     from '../db/schema';
 using { anubhav.claude as common } from '../db/common';
 
-@path: '/catalog'
-@requires: 'authenticated-user'
-service CatalogService {
+service CatalogService @(path : 'catalog') {
 
     entity Travellers         as projection on db.Travellers;
 
@@ -21,18 +19,3 @@ service CatalogService {
     entity AddressTypes       as projection on common.AddressTypes;
 }
 
-// ─── Row-level security & CRUD restrictions ───────────────────────────────────
-
-annotate CatalogService.Travellers with @restrict: [
-    { grant: [ 'READ', 'UPDATE' ], to: 'Traveller', where: 'userID = $user' },
-    { grant: '*',                  to: 'Admin' }
-];
-
-annotate CatalogService.TravelledLocations with @restrict: [
-    { grant: [ 'READ', 'CREATE', 'DELETE' ], to: 'Traveller', where: 'traveller.userID = $user' },
-    { grant: '*',                            to: 'Admin' }
-];
-
-annotate CatalogService.Destinations with @restrict: [
-    { grant: [ 'READ', 'CREATE' ], to: 'authenticated-user' }
-];

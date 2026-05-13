@@ -1,22 +1,24 @@
-# Custom JWT Authentication Framework Specification for SAP CAPM
+# Custom JWT Authentication Framework Specification for SAP CAPM with SQLite
 
 ## Project Overview
 
 Build a fully custom authentication and authorization framework for a Node.js-based SAP Cloud Application Programming Model (CAPM) application without using XSUAA or standard CAP authentication.
 
+We have already created entities in schema.cds for user, roles and userrole. Also a service is already created, so enhance the same if possible for login flow.
+
 The framework must support:
 
 - Custom login API
-- User validation from database
+- User validation from SQLite database using table Users
 - JWT token generation
 - JWT token validation middleware
 - Automatic attachment of authenticated user to `req.user`
-- Role-based authorization
+- Role-based authorization using our custom roles in UseRole Table
 - Refresh token support
 - Password hashing
 - Secure API protection
 - Fiori Freestyle UI integration
-- MongoDB database integration
+- SQLite database integration using CAP CDS entities
 
 ---
 
@@ -27,7 +29,7 @@ Client Application (Fiori/UI5/React)
         ↓
 POST /auth/login
         ↓
-Validate User from MongoDB
+Validate User from SQLite Database
         ↓
 Generate JWT Access Token
         ↓
@@ -51,7 +53,7 @@ Protected CAP APIs execute
 | Component | Technology |
 |---|---|
 | Backend Framework | CAPM Node.js |
-| Database | MongoDB |
+| Database | SQLite (CAP Default DB) |
 | Authentication | JWT |
 | Password Hashing | bcrypt |
 | Token Library | jsonwebtoken |
@@ -81,7 +83,10 @@ project-root/
 │   └── services.cds
 │
 ├── db/
-│   └── schema.cds
+│   ├── schema.cds
+│   ├── data/
+│   │   └── seed-users.csv
+│   └── sqlite.db
 │
 ├── package.json
 ├── .env
@@ -94,19 +99,9 @@ project-root/
 
 ## Disable CAP Standard Authentication
 
-Update `package.json`:
+Do not Update `package.json`:
 
-```json
-{
- "cds": {
-      "requires": {
-        "auth": {
-          "restrict_all_services": false
-        }
-      }
-    }
-}
-```
+As it is already disabled
 
 Framework must NOT use:
 
@@ -117,25 +112,28 @@ Framework must NOT use:
 
 ---
 
-# MongoDB Collections
+# SQLite Database Tables
 
-## Users Collection
+## Users Entity
 
-```json
-{
-  "_id": "ObjectId",
-  "userId": "UUID",
-  "email": "user@example.com",
-  "mobile": "9999999999",
-  "passwordHash": "bcryptHash",
-  "firstName": "John",
-  "lastName": "Doe",
-  "roles": ["ADMIN", "MANAGER"],
-  "isActive": true,
-  "failedLoginAttempts": 0,
-  "lastLoginAt": "timestamp",
-  "createdAt": "timestamp",
-  "updatedAt": "timestamp"
+Do not Create CDS entity in `db/schema.cds`
+
+```cds
+namespace auth.db;
+
+entity Users {
+    key userId             : UUID;
+    email                  : String(255);
+    mobile                 : String(20);
+    passwordHash           : String(500);
+    firstName              : String(100);
+    lastName               : String(100);
+    roles                  : String(500);
+    isActive               : Boolean default true;
+    failedLoginAttempts    : Integer default 0;
+    lastLoginAt            : Timestamp;
+    createdAt              : Timestamp;
+    updatedAt              : Timestamp;
 }
 ```
 
@@ -258,7 +256,7 @@ Middleware must:
 - Validate Bearer token
 - Verify JWT signature
 - Verify token expiry
-- Load user from MongoDB
+- Load user from SQLite database
 - Reject inactive users
 - Attach authenticated user to request
 
@@ -309,6 +307,7 @@ In `srv/server.js`
 
 ```js
 const cds = require('@sap/cds');
+const authMiddleware = require('./auth/auth-middleware');
 
 cds.on('bootstrap', app => {
 
@@ -474,12 +473,40 @@ BCRYPT_ROUNDS=10
 Required dependencies:
 
 ```bash
-npm install bcrypt jsonwebtoken dotenv helmet cors express-rate-limit mongodb
+npm install bcrypt jsonwebtoken dotenv helmet cors express-rate-limit
 ```
 
 ---
 
-# 16. Error Handling
+# 16. CAP Database Access
+
+Use CAP CDS query APIs.
+
+## Example User Fetch
+
+```js
+const cds = require('@sap/cds');
+
+const db = await cds.connect.to('db');
+
+const user = await db.run(
+  SELECT.one.from('auth.db.Users').where({ email })
+);
+```
+
+## Example User Update
+
+```js
+await db.run(
+  UPDATE('auth.db.Users')
+    .set({ lastLoginAt: new Date() })
+    .where({ userId })
+);
+```
+
+---
+
+# 17. Error Handling
 
 Framework must support centralized error handling.
 
@@ -495,7 +522,7 @@ Framework must support centralized error handling.
 
 ---
 
-# 17. Logging
+# 18. Logging
 
 Use structured logging.
 
@@ -515,7 +542,7 @@ Do NOT log:
 
 ---
 
-# 18. Optional Enhancements
+# 19. Optional Enhancements
 
 Implement if possible:
 
@@ -537,7 +564,7 @@ The implementation must provide:
 
 1. Complete CAPM project structure
 2. All middleware files
-3. MongoDB integration
+3. SQLite database integration
 4. JWT services
 5. Login/logout APIs
 6. Refresh token implementation
@@ -547,7 +574,7 @@ The implementation must provide:
 10. `.env.example`
 11. README with setup instructions
 12. Postman collection
-13. Sample MongoDB seed script
+13. Sample SQLite seed data
 
 ---
 
@@ -574,4 +601,5 @@ After implementation:
 - Role-based authorization works
 - Frontend can securely consume CAP APIs
 - No dependency on XSUAA or CAP standard auth
+- SQLite database used through CAP CDS entities
 
