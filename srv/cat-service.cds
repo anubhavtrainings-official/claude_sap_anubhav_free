@@ -1,15 +1,30 @@
 using { anubhav.claude as db }     from '../db/schema';
 using { anubhav.claude as common } from '../db/common';
 
-service CatalogService @(path : 'catalog') {
+service CatalogService @(
+    path     : 'catalog',
+    requires : 'authenticated-user'
+) {
 
+    @restrict: [
+        { grant: '*',                                 to: 'ADMIN' },
+        { grant: ['READ','CREATE','UPDATE','DELETE'], to: 'authenticated-user', where: 'userID = $user.email' }
+    ]
     entity Travellers         as projection on db.Travellers;
 
     @readonly
     entity TravellerTypes     as projection on common.TravellerTypes;
 
+    @restrict: [
+        { grant: '*',                                 to: 'ADMIN' },
+        { grant: ['READ','CREATE','UPDATE','DELETE'], to: 'authenticated-user', where: 'traveller.userID = $user.email' }
+    ]
     entity TravelledLocations as projection on db.TravelledLocations;
 
+    @restrict: [
+        { grant: '*',    to: 'ADMIN' },
+        { grant: 'READ', to: 'authenticated-user' }
+    ]
     entity Destinations       as projection on db.Destinations;
 
     @readonly
@@ -18,4 +33,3 @@ service CatalogService @(path : 'catalog') {
     @readonly
     entity AddressTypes       as projection on common.AddressTypes;
 }
-

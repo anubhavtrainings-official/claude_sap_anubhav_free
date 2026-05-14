@@ -18,6 +18,24 @@
 @userId           = 00000000-0000-0000-0000-000000000004
 @roleId           = 00000000-0000-0000-0000-000000000005
 @etag             = W/"2026-05-13T13:08:33.467Z"
+@jwt              = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjNWM1YzVjNS0wMDAxLTQ1NTUtODU1NS01NTU1NTU1NTU1MDEiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3Nzg3MzYxMzksImV4cCI6MTc3ODczNzAzOSwiYXVkIjoiYWNjZXNzIn0.m08U0XToUF5jv3it0fN6sEI7WetU1taEFs6I5d8EyFE
+### ============================================================
+###  Authorization testing with JWT token
+### ============================================================
+
+###Login flow
+POST {{base_v4}}/auth/login
+Content-Type: application/json
+
+{
+  "loginName":"superadmin@anubhav.com",
+  "password":"Welcome1!"
+}
+
+###Check the user details with JWT
+{{base_v4}}/auth/me
+Authorization: Bearer {{jwt}}
+
 
 ### ============================================================
 ###  SECTION 1 — SERVICE METADATA

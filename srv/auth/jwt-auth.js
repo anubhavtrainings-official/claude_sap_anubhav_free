@@ -19,10 +19,22 @@ module.exports = async function jwtAuth(req, res, next) {
     }
 
     try {
-        const rows = await SELECT.from('anubhav.claude.UserRoles').where({ user_ID: payload.sub });
+        const [user, rows] = await Promise.all([
+            SELECT.one.from('anubhav.claude.Users').columns('ID', 'loginName', 'isLocked').where({ ID: payload.sub }),
+            SELECT.from('anubhav.claude.UserRoles').where({ user_ID: payload.sub }),
+        ]);
+
+        if (!user) return res.status(401).json({ error: 'invalid_token', message: 'User not found' });
+        if (user.isLocked) return res.status(403).json({ error: 'user_locked', message: 'User is locked' });
+
         const roles = {};
         for (const r of rows) roles[r.role_code] = true;
-        req.user = new cds.User({ id: payload.sub, roles });
+
+        req.user = new cds.User({
+            id: payload.sub,
+            roles,
+            attr: { email: user.loginName },
+        });
         return next();
     } catch (err) {
         return res.status(500).json({ error: 'auth_lookup_failed', message: err.message });

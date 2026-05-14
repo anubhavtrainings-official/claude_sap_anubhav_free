@@ -14,8 +14,8 @@ module.exports = (srv) => {
             if (duplicate) return req.error(409, 'Email already registered');
         }
 
-        if (!req.data.userID && req.user?.id) {
-            req.data.userID = req.user.id;
+        if (!req.data.userID && req.user?.attr?.email) {
+            req.data.userID = req.user.attr.email;
         }
     });
 

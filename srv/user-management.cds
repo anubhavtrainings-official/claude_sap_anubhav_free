@@ -2,7 +2,10 @@ using { anubhav.claude as db }     from '../db/schema';
 using { anubhav.claude as common } from '../db/common';
 
 
-service UserManagement @(path: 'user-management') {
+service UserManagement @(
+    path     : 'user-management',
+    requires : 'ADMIN'
+) {
 
     entity Users     as projection on db.Users;
 
