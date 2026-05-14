@@ -1,3 +1,8 @@
+const cds = require('@sap/cds');
+const password = require('../auth/password');
+
+const UserCredentials = 'anubhav.claude.UserCredentials';
+
 module.exports = (srv) => {
     const { Users, UserRoles, Roles } = srv.entities;
 
@@ -22,34 +27,66 @@ module.exports = (srv) => {
 
     // ─── createUser ───────────────────────────────────────────────────────────
     srv.on('createUser', async (req) => {
-        const { firstName, lastName, email, roleId } = req.data;
+        const { firstName, lastName, email, roleId, initialPassword } = req.data;
+
+        if (!initialPassword || initialPassword.length < 8) {
+            return req.error(400, 'initialPassword must be at least 8 characters');
+        }
 
         const existing = await SELECT.one.from(Users).where({ loginName: email });
         if (existing) return req.error(409, 'User already exists');
 
-        const newUser = { firstName, lastName, loginName: email, isLocked: false };
-        await INSERT.into(Users).entries(newUser);
+        const userId = cds.utils.uuid();
+        const passwordHash = await password.hash(initialPassword);
 
-        const created = await SELECT.one.from(Users).where({ loginName: email });
+        await INSERT.into(Users).entries({
+            ID:        userId,
+            firstName,
+            lastName,
+            loginName: email,
+            isLocked:  false,
+        });
 
-        if (roleId && created) {
+        await INSERT.into(UserCredentials).entries({
+            user_ID:        userId,
+            passwordHash,
+            failedAttempts: 0,
+        });
+
+        if (roleId) {
             const role = await SELECT.one.from(Roles).where({ code: roleId });
             if (role) {
-                await INSERT.into(UserRoles).entries({ user_ID: created.ID, role_code: roleId });
+                await INSERT.into(UserRoles).entries({ user_ID: userId, role_code: roleId });
             }
         }
 
-        return created;
+        return SELECT.one.from(Users).where({ ID: userId });
     });
 
     // ─── resetPassword ────────────────────────────────────────────────────────
     srv.on('resetPassword', async (req) => {
         const { userId, newPassword } = req.data;
-        if (!newPassword) return req.error(400, 'Password must not be empty');
-        if (newPassword.length < 8) return req.error(400, 'Password must be at least 8 characters');
+        if (!newPassword || newPassword.length < 8) {
+            return req.error(400, 'Password must be at least 8 characters');
+        }
 
         const user = await SELECT.one.from(Users).where({ ID: userId });
         if (!user) return req.error(404, 'User not found');
+
+        const passwordHash = await password.hash(newPassword);
+        const creds = await SELECT.one.from(UserCredentials).where({ user_ID: userId });
+
+        if (creds) {
+            await UPDATE(UserCredentials)
+                .set({ passwordHash, failedAttempts: 0 })
+                .where({ ID: creds.ID });
+        } else {
+            await INSERT.into(UserCredentials).entries({
+                user_ID:        userId,
+                passwordHash,
+                failedAttempts: 0,
+            });
+        }
 
         return true;
     });
