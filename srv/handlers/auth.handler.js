@@ -1,9 +1,13 @@
+const cds = require('@sap/cds');
 const jwt = require('../auth/jwt');
 const password = require('../auth/password');
 
 const Users           = 'anubhav.claude.Users';
 const UserCredentials = 'anubhav.claude.UserCredentials';
 const UserRoles       = 'anubhav.claude.UserRoles';
+const Travellers      = 'anubhav.claude.Travellers';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const loadRoles = async (userId) => {
     const rows = await SELECT.from(UserRoles).where({ user_ID: userId });
@@ -66,6 +70,68 @@ module.exports = (srv) => {
         const newRefresh = jwt.sign({ sub: user.ID },        'refresh');
 
         return { access, refresh: newRefresh, expiresIn: jwt.accessTtlSeconds };
+    });
+
+    // ─── register ──────────────────────────────────────────────────────────────
+    // Public self-registration: creates a TRAVELLER login + Travellers profile,
+    // locked (isLocked = true) until an admin unlocks the account.
+    srv.on('register', async (req) => {
+        const { firstName, lastName, email, password: plain, phone, addressType } = req.data;
+
+        if (!firstName?.trim() || !lastName?.trim()) {
+            return req.error(400, 'First name and last name are required');
+        }
+        if (!email || !EMAIL_RE.test(email)) {
+            return req.error(400, 'A valid email is required');
+        }
+        if (!plain || plain.length < 8) {
+            return req.error(400, 'Password must be at least 8 characters');
+        }
+
+        const loginName = email.trim().toLowerCase();
+
+        const existingUser = await SELECT.one.from(Users).where({ loginName });
+        if (existingUser) return req.error(409, 'Email already registered');
+
+        const existingTrav = await SELECT.one.from(Travellers).where({ email: loginName });
+        if (existingTrav) return req.error(409, 'Email already registered');
+
+        const userId       = cds.utils.uuid();
+        const passwordHash = await password.hash(plain);
+
+        await INSERT.into(Users).entries({
+            ID:        userId,
+            loginName,
+            firstName: firstName.trim(),
+            lastName:  lastName.trim(),
+            isLocked:  true,            // locked until an admin unlocks
+        });
+        await INSERT.into(UserCredentials).entries({
+            user_ID:        userId,
+            passwordHash,
+            failedAttempts: 0,
+        });
+        await INSERT.into(UserRoles).entries({
+            user_ID:   userId,
+            role_code: 'TRAVELLER',
+        });
+        await INSERT.into(Travellers).entries({
+            firstName:        firstName.trim(),
+            lastName:         lastName.trim(),
+            email:            loginName,
+            userID:           loginName,
+            phone:            phone || null,
+            type_code:        'ST',
+            status_code:      'A',
+            addressType_code: addressType || 'H',
+        });
+
+        return {
+            userID:    userId,
+            loginName,
+            locked:    true,
+            message:   'Registration successful. An admin must unlock your account before first login.',
+        };
     });
 
     // ─── me ───────────────────────────────────────────────────────────────────

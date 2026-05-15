@@ -1,6 +1,6 @@
 namespace anubhav.claude;
 
-using { cuid, managed }  from '@sap/cds/common';
+using { cuid, managed, Currency }  from '@sap/cds/common';
 using {
     anubhav.claude.AddressTypes,
     anubhav.claude.TravellerStatus,
@@ -56,6 +56,8 @@ entity Travellers : cuid, managed {
     userID      : String(100);
     @title: '{i18n>Locations}'
     locations   : Composition of many TravelledLocations on locations.traveller = $self;
+    @title: '{i18n>Addresses}'
+    addresses   : Composition of many Addresses on addresses.traveller = $self;
 }
 
 annotate Travellers with {
@@ -75,8 +77,34 @@ entity TravelledLocations : cuid {
     @mandatory
     @title: '{i18n>TravelTo}'
     travelTo    : Date;
+    @title: '{i18n>Cost}'
+    @Measures.ISOCurrency: currency.code
+    cost        : Decimal(15, 2);
+    @title: '{i18n>Currency}'
+    currency    : Currency;
     @title: '{i18n>Notes}'
     notes       : LargeString;
+}
+
+// ─── Addresses ────────────────────────────────────────────────────────────────
+
+entity Addresses : cuid {
+    @title: '{i18n>Traveller}'
+    traveller   : Association to Travellers;
+    @title: '{i18n>AddressType}'
+    addressType : Association to AddressTypes;
+    @mandatory
+    @title: '{i18n>Street}'
+    street      : String(120);
+    @mandatory
+    @title: '{i18n>City}'
+    city        : String(100);
+    @title: '{i18n>PostalCode}'
+    postalCode  : String(20);
+    @title: '{i18n>Country}'
+    country     : String(100);
+    @title: '{i18n>IsPrimary}'
+    isPrimary   : Boolean default false;
 }
 
 // ─── Users ────────────────────────────────────────────────────────────────────

@@ -16,7 +16,10 @@
       "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-AppUsers.csv\" -Force)",
       "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-Contacts.csv\" -Force)",
       "Bash(Remove-Item \"C:\\\\claude\\\\anubhav-claude\\\\db\\\\data\\\\anubhav.claude-Vacations.csv\" -Force)",
-      "Bash(Write-Output \"Deleted obsolete CSV files\")"
+      "Bash(Write-Output \"Deleted obsolete CSV files\")",
+      "Bash(curl -s -X POST http://localhost:4004/odata/v4/auth/login -H \"Content-Type: application/json\" -d '{\"loginName\":\"superadmin@anubhav.com\",\"password\":\"Welcome1!\"}')",
+      "Bash(echo \"exit: $?\")",
+      "Bash(curl -s -X POST http://localhost:4004/odata/v4/auth/login -H \"Content-Type: application/json\" -d '{\"loginName\":\"raj.sharma@example.com\",\"password\":\"Welcome1!\"}')"
     ]
   }
 }

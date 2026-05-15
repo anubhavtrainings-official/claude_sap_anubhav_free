@@ -1,5 +1,6 @@
 using { anubhav.claude as db }     from '../db/schema';
 using { anubhav.claude as common } from '../db/common';
+using { sap }                      from '@sap/cds/common';
 
 service CatalogService @(
     path     : 'catalog',
@@ -22,6 +23,12 @@ service CatalogService @(
     entity TravelledLocations as projection on db.TravelledLocations;
 
     @restrict: [
+        { grant: '*',                                 to: 'ADMIN' },
+        { grant: ['READ','CREATE','UPDATE','DELETE'], to: 'authenticated-user', where: 'traveller.userID = $user.email' }
+    ]
+    entity Addresses          as projection on db.Addresses;
+
+    @restrict: [
         { grant: '*',    to: 'ADMIN' },
         { grant: 'READ', to: 'authenticated-user' }
     ]
@@ -32,4 +39,7 @@ service CatalogService @(
 
     @readonly
     entity AddressTypes       as projection on common.AddressTypes;
+
+    @readonly
+    entity Currencies         as projection on sap.common.Currencies;
 }

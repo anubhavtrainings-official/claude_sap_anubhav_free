@@ -1,0 +1,16 @@
+/* TravelHub — custom styles */
+
+.thLoginWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.thLoginCard {
+    margin: auto;
+}
+
+.thTile {
+    width: 11rem;
+}

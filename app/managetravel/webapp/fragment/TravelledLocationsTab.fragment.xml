@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Table id="locationsTable" mode="MultiSelect"
+           items="{path: 'locations', parameters: {$$updateGroupId: 'travellerChanges', $expand: 'destination'}}">
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="Travelled Locations" level="H3"/>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="Add" press=".onAddLocation"/>
+                <Button icon="sap-icon://delete" text="Delete" type="Transparent"
+                        press=".onDeleteLocation"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column><Text text="Destination"/></Column>
+            <Column><Text text="Travel From"/></Column>
+            <Column><Text text="Travel To"/></Column>
+            <Column><Text text="Notes"/></Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Select selectedKey="{destination_ID}"
+                            forceSelection="false"
+                            items="{path: '/Destinations', templateShareable: false}">
+                        <core:Item key="{ID}" text="{name}"/>
+                    </Select>
+                    <DatePicker value="{travelFrom}"
+                                valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd"/>
+                    <DatePicker value="{travelTo}"
+                                valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd"/>
+                    <Input value="{notes}" placeholder="Notes"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

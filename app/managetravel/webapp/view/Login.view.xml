@@ -1,0 +1,35 @@
+<mvc:View controllerName="anubhav.claude.managetravel.controller.Login"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns:l="sap.ui.layout"
+          xmlns:f="sap.ui.layout.form"
+          xmlns="sap.m"
+          displayBlock="true">
+    <Page id="loginPage" showHeader="false" class="sapUiContentPadding">
+        <content>
+            <l:VerticalLayout class="thLoginWrap" width="100%">
+                <Panel class="thLoginCard" width="22rem">
+                    <Title text="Sign in to TravelHub" level="H2" class="sapUiSmallMarginBottom"/>
+                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                                  labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
+                                  columnsXL="1" columnsL="1" columnsM="1">
+                        <f:content>
+                            <Label text="Email" required="true"/>
+                            <Input id="inEmail" value="{/loginName}" type="Email"
+                                   placeholder="you@example.com"
+                                   submit=".onLogin"/>
+                            <Label text="Password" required="true"/>
+                            <Input id="inPassword" value="{/password}" type="Password"
+                                   placeholder="Your password"
+                                   submit=".onLogin"/>
+                        </f:content>
+                    </f:SimpleForm>
+                    <Button text="Login" type="Emphasized" width="100%"
+                            press=".onLogin" class="sapUiSmallMarginTop"/>
+                    <HBox justifyContent="Center" class="sapUiSmallMarginTop">
+                        <Link text="Register as Traveller" press=".onOpenRegister"/>
+                    </HBox>
+                </Panel>
+            </l:VerticalLayout>
+        </content>
+    </Page>
+</mvc:View>
