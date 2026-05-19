@@ -28,12 +28,6 @@ service CatalogService @(
     ]
     entity Addresses          as projection on db.Addresses;
 
-    @restrict: [
-        { grant: '*',    to: 'ADMIN' },
-        { grant: 'READ', to: 'authenticated-user' }
-    ]
-    entity Destinations       as projection on db.Destinations;
-
     @readonly
     entity TravellerStatus    as projection on common.TravellerStatus;
 

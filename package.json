@@ -25,6 +25,7 @@
   },
   "private": true,
   "sapux": [
-    "app/managetravel"
+    "app/managetravel",
+    "app/managedest"
   ]
 }

@@ -19,7 +19,17 @@
       "Bash(Write-Output \"Deleted obsolete CSV files\")",
       "Bash(curl -s -X POST http://localhost:4004/odata/v4/auth/login -H \"Content-Type: application/json\" -d '{\"loginName\":\"superadmin@anubhav.com\",\"password\":\"Welcome1!\"}')",
       "Bash(echo \"exit: $?\")",
-      "Bash(curl -s -X POST http://localhost:4004/odata/v4/auth/login -H \"Content-Type: application/json\" -d '{\"loginName\":\"raj.sharma@example.com\",\"password\":\"Welcome1!\"}')"
+      "Bash(curl -s -X POST http://localhost:4004/odata/v4/auth/login -H \"Content-Type: application/json\" -d '{\"loginName\":\"raj.sharma@example.com\",\"password\":\"Welcome1!\"}')",
+      "PowerShell(npx cds compile srv 2>&1 | Select-Object -Last 30)",
+      "Skill(sap-fiori)",
+      "Bash(claude mcp *)",
+      "mcp__fiori__list_functionality",
+      "mcp__fiori__search_docs",
+      "PowerShell(npx cds compile app/services.cds --to edmx 2>&1 | Select-Object -First 40)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "fiori"
+  ]
 }
