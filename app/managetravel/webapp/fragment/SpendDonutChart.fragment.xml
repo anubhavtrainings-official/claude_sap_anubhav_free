@@ -4,7 +4,7 @@
         xmlns:viz="sap.viz.ui5.controls"
         xmlns:vizData="sap.viz.ui5.data"
         xmlns:vizFeed="sap.viz.ui5.controls.common.feeds">
-    <Panel headerText="{chart>/title}" class="sapUiResponsiveMargin" width="auto">
+    <Panel id="donutPanel" headerText="{chart>/title}" class="thDonutPanel sapUiResponsiveMargin" width="auto">
         <viz:VizFrame id="donutChart" vizType="donut" width="100%" height="20rem"
                       uiConfig="{applicationSet:'fiori'}">
             <viz:dataset>

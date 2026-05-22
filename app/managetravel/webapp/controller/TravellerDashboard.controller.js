@@ -55,9 +55,10 @@ sap.ui.define([
 
         // Spend per destination, currency-aware: slices split by destination+currency
         // (e.g. "Paris (EUR)") so amounts across currencies are never summed together.
+        // Returns a Promise so callers can chain UI effects after the chart is refreshed.
         _loadDonut: function () {
             var that = this;
-            this._ajax(TRIPS_URL, "GET").then(
+            return this._ajax(TRIPS_URL, "GET").then(
                 function (oRes) {
                     var mSpend = {};
                     (oRes.value || []).forEach(function (t) {
@@ -73,6 +74,20 @@ sap.ui.define([
                 },
                 function (jqXHR) { that.showError(jqXHR); }
             );
+        },
+
+        _pulseDonut: function () {
+            var oPanel = this.byId("donutPanel");
+            if (!oPanel) { return; }
+            if (this._donutPulseTimer) {
+                clearTimeout(this._donutPulseTimer);
+                oPanel.removeStyleClass("thDonutGlow");
+            }
+            // Re-trigger animation by toggling class on next tick
+            setTimeout(function () { oPanel.addStyleClass("thDonutGlow"); }, 0);
+            this._donutPulseTimer = setTimeout(function () {
+                oPanel.removeStyleClass("thDonutGlow");
+            }, 10000);
         },
 
         _locationsBinding: function () {
@@ -142,11 +157,23 @@ sap.ui.define([
             oModel.submitBatch(GROUP).then(
                 function () {
                     if (oModel.hasPendingChanges(GROUP)) {
-                        that.showError("Some changes could not be saved. Please review and retry.");
-                    } else {
-                        MessageToast.show("Saved");
+                        // Surface the actual server-side error from the MessageManager
+                        // (OData V4 deposits parsed $batch errors there when individual
+                        // creates/updates fail without rejecting the batch promise).
+                        var oMM = sap.ui.getCore && sap.ui.getCore().getMessageManager
+                                && sap.ui.getCore().getMessageManager();
+                        var aMsgs = oMM ? (oMM.getMessageModel().getData() || []) : [];
+                        var sDetails = aMsgs
+                            .filter(function (m) { return m.type === "Error" || m.type === "Warning"; })
+                            .map(function (m) { return m.message; })
+                            .join("\n");
+                        that.showError(sDetails || "Some changes could not be saved. Please review and retry.");
+                        return;
                     }
-                    that._loadDonut();
+                    MessageToast.show("Saved");
+                    // Refresh donut first; glow fires only after fresh data lands so
+                    // the user sees the pulsing animation over the up-to-date chart.
+                    that._loadDonut().then(function () { that._pulseDonut(); });
                 },
                 function (oErr) { that.showError(oErr); }
             );

@@ -15,6 +15,8 @@
             <Column><Text text="Travel From"/></Column>
             <Column><Text text="Travel To"/></Column>
             <Column><Text text="Notes"/></Column>
+            <Column hAlign="End"><Text text="{i18n>locations.cost}"/></Column>
+            <Column><Text text="{i18n>locations.currency}"/></Column>
         </columns>
         <items>
             <ColumnListItem>
@@ -29,6 +31,11 @@
                     <DatePicker value="{travelTo}"
                                 valueFormat="yyyy-MM-dd" displayFormat="yyyy-MM-dd"/>
                     <Input value="{notes}" placeholder="Notes"/>
+                    <Input value="{cost}" type="Number" textAlign="End"/>
+                    <Select selectedKey="{currency_code}" forceSelection="false"
+                            items="{path: '/Currencies', parameters: {$select: 'code,name', $orderby: 'code'}, templateShareable: false}">
+                        <core:Item key="{code}" text="{code} — {name}"/>
+                    </Select>
                 </cells>
             </ColumnListItem>
         </items>

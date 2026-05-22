@@ -36,4 +36,10 @@ service CatalogService @(
 
     @readonly
     entity Currencies         as projection on sap.common.Currencies;
+
+    @restrict: [
+        { grant: '*',    to: 'ADMIN' },
+        { grant: 'READ', to: 'authenticated-user' }
+    ]
+    entity Destinations       as projection on db.Destinations;
 }

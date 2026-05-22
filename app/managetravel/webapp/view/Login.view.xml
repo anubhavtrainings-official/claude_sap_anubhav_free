@@ -2,34 +2,42 @@
           xmlns:mvc="sap.ui.core.mvc"
           xmlns:l="sap.ui.layout"
           xmlns:f="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"
           xmlns="sap.m"
           displayBlock="true">
-    <Page id="loginPage" showHeader="false" class="sapUiContentPadding">
+    <Page id="loginPage" showHeader="false" class="thLoginPage">
         <content>
-            <l:VerticalLayout class="thLoginWrap" width="100%">
-                <Panel class="thLoginCard" width="22rem">
-                    <Title text="Sign in to TravelHub" level="H2" class="sapUiSmallMarginBottom"/>
-                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout"
-                                  labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-                                  columnsXL="1" columnsL="1" columnsM="1">
-                        <f:content>
-                            <Label text="Email" required="true"/>
-                            <Input id="inEmail" value="{/loginName}" type="Email"
-                                   placeholder="you@example.com"
-                                   submit=".onLogin"/>
-                            <Label text="Password" required="true"/>
-                            <Input id="inPassword" value="{/password}" type="Password"
-                                   placeholder="Your password"
-                                   submit=".onLogin"/>
-                        </f:content>
-                    </f:SimpleForm>
-                    <Button text="Login" type="Emphasized" width="100%"
-                            press=".onLogin" class="sapUiSmallMarginTop"/>
-                    <HBox justifyContent="Center" class="sapUiSmallMarginTop">
-                        <Link text="Register as Traveller" press=".onOpenRegister"/>
-                    </HBox>
+            <VBox class="thLoginBg" alignItems="Center" justifyContent="Center">
+                <Text text="{i18n>login.brand}" class="thLoginBrand"/>
+                <Panel class="thLoginCard3D">
+                    <VBox class="thLoginInner">
+                        <Title text="{i18n>login.title}" level="H2" class="thLoginTitle"/>
+                        <VBox class="thFieldWrap">
+                            <Label text="{i18n>login.email}" class="thFieldLabel"/>
+                            <HBox class="thInputRow">
+                                <Input id="inEmail" value="{/loginName}" type="Email" submit=".onLogin" class="thLoginInput"/>
+                                <core:Icon src="sap-icon://email" class="thInputIcon"/>
+                            </HBox>
+                        </VBox>
+                        <VBox class="thFieldWrap">
+                            <Label text="{i18n>login.password}" class="thFieldLabel"/>
+                            <HBox class="thInputRow">
+                                <Input id="inPassword" value="{/password}" type="Password" submit=".onLogin" class="thLoginInput"/>
+                                <core:Icon src="sap-icon://locked" class="thInputIcon"/>
+                            </HBox>
+                        </VBox>
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="thLoginRow">
+                            <CheckBox text="{i18n>login.rememberMe}" class="thRemember"/>
+                            <Link text="{i18n>login.forgotPassword}" press=".onForgotPassword" class="thForgot"/>
+                        </HBox>
+                        <Button text="{i18n>login.button}" type="Emphasized" press=".onLogin" class="thLoginBtn"/>
+                        <HBox justifyContent="Center" class="thLoginFooter">
+                            <Text text="{i18n>login.noAccount}"/>
+                            <Link text="{i18n>login.register}" press=".onOpenRegister" class="thRegisterLink"/>
+                        </HBox>
+                    </VBox>
                 </Panel>
-            </l:VerticalLayout>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

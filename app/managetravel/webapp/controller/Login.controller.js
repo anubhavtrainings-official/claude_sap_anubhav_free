@@ -45,6 +45,10 @@ sap.ui.define([
         },
 
         // ── Registration ─────────────────────────────────────────────────────
+        onForgotPassword: function () {
+            MessageToast.show("Password reset is not yet available.");
+        },
+
         onOpenRegister: function () {
             var that = this;
             this.getView().setModel(new JSONModel({
