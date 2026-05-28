@@ -104,6 +104,26 @@ sap.ui.define([
             oBinding.create({ notes: "" });
         },
 
+        // Row click on Travelled Locations → open the read-only detail view.
+        // Editable cells (Input/Select/DatePicker) absorb their own clicks,
+        // so this only fires for clicks on row whitespace or the chevron.
+        onLocationPress: function (oEvent) {
+            var oItem = oEvent.getParameter("listItem");
+            var oCtx  = oItem && oItem.getBindingContext();
+            if (!oCtx) {
+                return;
+            }
+            if (oCtx.isTransient && oCtx.isTransient()) {
+                MessageToast.show("Save the new row before viewing details.");
+                return;
+            }
+            var sId = oCtx.getProperty("ID");
+            if (!sId) {
+                return;
+            }
+            this.getRouter().navTo("travelDetail", { locationId: sId });
+        },
+
         onDeleteLocation: function () {
             var oTable = this.byId("locationsTable");
             var aItems = oTable.getSelectedItems();

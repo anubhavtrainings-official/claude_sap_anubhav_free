@@ -25,7 +25,11 @@
       "Bash(claude mcp *)",
       "mcp__fiori__list_functionality",
       "mcp__fiori__search_docs",
-      "PowerShell(npx cds compile app/services.cds --to edmx 2>&1 | Select-Object -First 40)"
+      "PowerShell(npx cds compile app/services.cds --to edmx 2>&1 | Select-Object -First 40)",
+      "Bash(grep -v \"//\")",
+      "PowerShell(Get-Item *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(git -C /c/claude/anubhav-claude status --short)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -10,7 +10,9 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^2"
+    "@cap-js/sqlite": "^2",
+    "http-server": "^14.1.1",
+    "puppeteer": "^25.1.0"
   },
   "cds": {
     "requires": {

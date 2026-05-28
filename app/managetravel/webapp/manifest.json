@@ -109,6 +109,11 @@
           "name": "travellerDashboard",
           "pattern": "traveller",
           "target": ["travellerDashboard"]
+        },
+        {
+          "name": "travelDetail",
+          "pattern": "traveller/location/{locationId}",
+          "target": ["travelDetail"]
         }
       ],
       "targets": {
@@ -125,6 +130,11 @@
         "travellerDashboard": {
           "viewId": "travellerDashboard",
           "viewName": "TravellerDashboard",
+          "transition": "slide"
+        },
+        "travelDetail": {
+          "viewId": "travelDetail",
+          "viewName": "TravelDetail",
           "transition": "slide"
         }
       }
