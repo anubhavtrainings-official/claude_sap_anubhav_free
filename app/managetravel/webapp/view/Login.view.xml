@@ -9,20 +9,24 @@
         <content>
             <VBox class="thLoginBg" alignItems="Center" justifyContent="Center">
                 <Text text="{i18n>login.brand}" class="thLoginBrand"/>
-                <Panel class="thLoginCard3D">
+                <Panel class="thLoginCard3D" width="34rem">
                     <VBox class="thLoginInner">
                         <Title text="{i18n>login.title}" level="H2" class="thLoginTitle"/>
                         <VBox class="thFieldWrap">
                             <Label text="{i18n>login.email}" class="thFieldLabel"/>
                             <HBox class="thInputRow">
-                                <Input id="inEmail" value="{/loginName}" type="Email" submit=".onLogin" class="thLoginInput"/>
+                                <Input id="inEmail" value="{/loginName}" type="Email" submit=".onLogin" class="thLoginInput" width="100%">
+                                    <layoutData><FlexItemData growFactor="1"/></layoutData>
+                                </Input>
                                 <core:Icon src="sap-icon://email" class="thInputIcon"/>
                             </HBox>
                         </VBox>
                         <VBox class="thFieldWrap">
                             <Label text="{i18n>login.password}" class="thFieldLabel"/>
                             <HBox class="thInputRow">
-                                <Input id="inPassword" value="{/password}" type="Password" submit=".onLogin" class="thLoginInput"/>
+                                <Input id="inPassword" value="{/password}" type="Password" submit=".onLogin" class="thLoginInput" width="100%">
+                                    <layoutData><FlexItemData growFactor="1"/></layoutData>
+                                </Input>
                                 <core:Icon src="sap-icon://locked" class="thInputIcon"/>
                             </HBox>
                         </VBox>

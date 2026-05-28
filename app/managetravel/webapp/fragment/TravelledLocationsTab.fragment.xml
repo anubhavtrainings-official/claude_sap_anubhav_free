@@ -34,6 +34,7 @@
                     <Input value="{notes}" placeholder="Notes"/>
                     <Input value="{cost}" type="Number" textAlign="End"/>
                     <Select selectedKey="{currency_code}" forceSelection="false"
+                            change=".onCurrencyChange"
                             items="{path: '/Currencies', parameters: {$select: 'code,name', $orderby: 'code'}, templateShareable: false}">
                         <core:Item key="{code}" text="{code} — {name}"/>
                     </Select>

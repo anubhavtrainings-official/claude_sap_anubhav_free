@@ -104,6 +104,21 @@ sap.ui.define([
             oBinding.create({ notes: "" });
         },
 
+        // Two-way bind on the Currency Select alone isn't enough: the
+        // @Measures.ISOCurrency: currency.code annotation on cost makes V4
+        // serialize a `currency: { code: null }` navigation alongside the FK,
+        // and on the server the null nav overrides the FK so the column ends
+        // up null. We force the nav to mirror the FK so both agree.
+        onCurrencyChange: function (oEvent) {
+            var oSelect = oEvent.getSource();
+            var oCtx    = oSelect.getBindingContext();
+            if (!oCtx) { return; }
+            var oItem   = oEvent.getParameter("selectedItem");
+            var sCode   = oItem ? oItem.getKey() : oSelect.getSelectedKey();
+            oCtx.setProperty("currency_code", sCode || null);
+            oCtx.setProperty("currency/code",  sCode || null);
+        },
+
         // Row click on Travelled Locations → open the read-only detail view.
         // Editable cells (Input/Select/DatePicker) absorb their own clicks,
         // so this only fires for clicks on row whitespace or the chevron.
