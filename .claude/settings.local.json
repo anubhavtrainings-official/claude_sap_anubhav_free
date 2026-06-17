@@ -36,7 +36,12 @@
       "PowerShell(npm view *)",
       "mcp__sqlite__list_tables",
       "mcp__sqlite__describe_table",
-      "mcp__sqlite__read_query"
+      "mcp__sqlite__read_query",
+      "mcp__github__list_issues",
+      "Bash(curl -s 'http://localhost:4004/odata/v4/catalog/TravelledLocations?$top=1' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjNWM1YzVjNS0wMDA2LTQ1NTUtODU1NS01NTU1NTU1NTU1MDYiLCJyb2xlcyI6WyJUUkFWRUxMRVIiXSwiaWF0IjoxNzc5OTczMjYxLCJleHAiOjE3Nzk5NzQxNjEsImF1ZCI6ImFjY2VzcyJ9.qIpi5CG2Ku9VB5zhiftJugkOb8t3aQ91iHTGO7TffqM')",
+      "Bash(curl *)",
+      "Bash(npm ls *)",
+      "Bash(npx eslint *)"
     ]
   },
   "enableAllProjectMcpServers": true,
