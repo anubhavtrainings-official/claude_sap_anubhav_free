@@ -14,6 +14,7 @@
 
 # Done! Use it immediately
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -30,6 +31,7 @@
 ✓ Browse graphically
 ✓ Easy to undo
 ```
+*claude code by anubhav trainings*
 
 ### Way 2: Command Line (Fastest - Experienced)
 ```bash
@@ -39,6 +41,7 @@
 /plugin install sap-cap-capire@sap-skills
 /plugin install code-review@claude-plugins-official
 ```
+*claude code by anubhav trainings*
 
 ### Way 3: Config File (Team Collaboration)
 ```json
@@ -52,6 +55,7 @@
   ]
 }
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -72,11 +76,13 @@
 ```bash
 /plugin marketplace add https://github.com/secondsky/sap-skills
 ```
+*claude code by anubhav trainings*
 
 ### For Community Plugins:
 ```bash
 /plugin marketplace add https://github.com/anthropics/claude-plugins-community
 ```
+*claude code by anubhav trainings*
 
 ✓ Only need to do this ONCE per marketplace
 
@@ -88,24 +94,28 @@
 ```bash
 /plugin install sap-cap-capire@sap-skills
 ```
+*claude code by anubhav trainings*
 **Includes:** Data modeling, service implementation, testing
 
 ### BTP Deployment
 ```bash
 /plugin install sap-btp-cloud-platform@sap-skills
 ```
+*claude code by anubhav trainings*
 **Includes:** CloudFoundry deployment, environment management
 
 ### Fiori UI Development
 ```bash
 /plugin install sap-fiori-tools@sap-skills
 ```
+*claude code by anubhav trainings*
 **Includes:** UI5 scaffolding, Fiori elements templates
 
 ### ABAP Development
 ```bash
 /plugin install sap-abap-cds@sap-skills
 ```
+*claude code by anubhav trainings*
 **Includes:** CDS view creation, ABAP patterns
 
 ---
@@ -118,12 +128,14 @@
 /plugin install security-guidance@claude-plugins-official
 /plugin install frontend-design@claude-plugins-official
 ```
+*claude code by anubhav trainings*
 
 ### Development Workflow
 ```bash
 /plugin install feature-dev@claude-plugins-official
 /plugin install commit-commands@claude-plugins-official
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -154,12 +166,14 @@
 /plugin marketplace remove <name>    # Remove marketplace
 /reload-plugins                      # Reload all plugins
 ```
+*claude code by anubhav trainings*
 
 ### After Installing
 ```bash
 /command-name                        # Use plugin commands
 # Example: /init-cap-project my-app
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -172,6 +186,7 @@
 # Install in project only (sharable with team)
 /plugin install name --scope project
 ```
+*claude code by anubhav trainings*
 
 **Use `project` scope if:** Sharing with team, want in git
 **Use `user` scope if:** Personal tools only
@@ -199,6 +214,7 @@
 # 5. Start using
 /init-cap-project my-app
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -211,6 +227,7 @@
   → CDS modeling skill activates
 ✓ You don't do anything - just work
 ```
+*claude code by anubhav trainings*
 
 ### Commands (Manual)
 ```
@@ -218,6 +235,7 @@
 ⌘ Example: /init-cap-project
 ⌘ You see them in autocomplete
 ```
+*claude code by anubhav trainings*
 
 ### Hooks (Automatic Events)
 ```
@@ -225,6 +243,7 @@
 🛡️ Example: Run linting on save
 🛡️ No user action needed
 ```
+*claude code by anubhav trainings*
 
 ### MCP Servers (Integration)
 ```
@@ -232,6 +251,7 @@
 🔌 Example: GitHub, SAP APIs
 🔌 May require authentication
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -245,6 +265,7 @@
 # Then try install again
 /plugin install sap-cap-capire@sap-skills
 ```
+*claude code by anubhav trainings*
 
 ### Commands Don't Show?
 ```bash
@@ -253,6 +274,7 @@
 
 # Restart Claude Code completely
 ```
+*claude code by anubhav trainings*
 
 ### Performance Slow?
 ```bash
@@ -262,6 +284,7 @@
 # Remove unused ones
 /plugin uninstall unused-plugin-name
 ```
+*claude code by anubhav trainings*
 
 ### See Errors?
 ```bash
@@ -269,6 +292,7 @@
 # Go to Errors tab
 # Check what's wrong
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -309,6 +333,7 @@ Plugins:
 
 Note: Everything else you need to install
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -353,6 +378,7 @@ Note: Everything else you need to install
 /plugin install sap-cap-capire@sap-skills
 # Done! Ready to use
 ```
+*claude code by anubhav trainings*
 
 ### Workflow 2: Team Setup
 ```bash
@@ -368,6 +394,7 @@ git commit -m "Add CAP dev plugins"
 
 # Step 4: Team pulls and has same setup
 ```
+*claude code by anubhav trainings*
 
 ### Workflow 3: Browse and Install
 ```bash
@@ -378,6 +405,7 @@ git commit -m "Add CAP dev plugins"
 # Select Install
 # Done!
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -419,6 +447,7 @@ git commit -m "Add CAP dev plugins"
 
 # That's it - you're using the marketplace!
 ```
+*claude code by anubhav trainings*
 
 ---
 

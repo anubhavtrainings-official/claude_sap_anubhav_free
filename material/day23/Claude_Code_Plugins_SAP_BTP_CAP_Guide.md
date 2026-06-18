@@ -35,6 +35,7 @@ my-sap-plugin/
 ├── .mcp.json                         # MCP server definitions
 └── README.md
 ```
+*claude code by anubhav trainings*
 
 ### File Types Explained
 
@@ -55,6 +56,7 @@ my-sap-plugin/
   }
 }
 ```
+*claude code by anubhav trainings*
 
 #### SKILL.md (Knowledge File)
 ```yaml
@@ -77,6 +79,7 @@ when_to_use: |
 3. Implement event handlers in srv/ directory
 ...
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -120,6 +123,7 @@ The heart of your plugin. Defines metadata and component paths.
   }
 }
 ```
+*claude code by anubhav trainings*
 
 #### 2. **Skills (skills/SKILL.md)**
 Model-invoked knowledge that Claude automatically uses based on context.
@@ -170,6 +174,7 @@ entity Orders : cuid, managed {
   total       : Decimal(10,2);
 }
 ```
+*claude code by anubhav trainings*
 
 ## 2. Service Implementation (srv/)
 
@@ -204,6 +209,7 @@ class BookshopService extends cds.ApplicationService {
 
 module.exports = BookshopService;
 ```
+*claude code by anubhav trainings*
 
 ## 3. Testing Standards
 - Unit test all service handlers
@@ -246,6 +252,7 @@ Create a production-ready SAP CAP project with all necessary configurations.
 - Sample CDS files
 - Ready-to-use handlers
 ```
+*claude code by anubhav trainings*
 
 #### 4. **Hooks (hooks/hooks.json)**
 Event-driven automation that triggers on specific events.
@@ -270,6 +277,7 @@ Event-driven automation that triggers on specific events.
   ]
 }
 ```
+*claude code by anubhav trainings*
 
 #### 5. **MCP Servers (.mcp.json)**
 Integration with external services.
@@ -291,6 +299,7 @@ Integration with external services.
   }
 }
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -310,6 +319,7 @@ npm install -g @anthropic-ai/claude-code
 # Verify installation
 claude-code --version
 ```
+*claude code by anubhav trainings*
 
 #### Step 1.2: Install SAP CAP Marketplace Plugin
 ```bash
@@ -319,6 +329,7 @@ claude-code --version
 # Or install directly from GitHub marketplace:
 /plugin install sap-cap-capire@sap-skills
 ```
+*claude code by anubhav trainings*
 
 #### Step 1.3: Install Multiple Related Plugins
 ```bash
@@ -328,6 +339,7 @@ claude-code --version
 # List all installed plugins
 /plugin list
 ```
+*claude code by anubhav trainings*
 
 #### Step 1.4: Verify Installation
 ```bash
@@ -337,6 +349,7 @@ claude-code --version
 # Reload plugins after installation
 /reload-plugins
 ```
+*claude code by anubhav trainings*
 
 ### Phase 2: Configuration
 
@@ -365,6 +378,7 @@ Create `.claude/settings.json` in your project root:
   ]
 }
 ```
+*claude code by anubhav trainings*
 
 #### Step 2.2: Create Local Plugin Configuration
 Create `.claude/agents/` directory for local agent definitions:
@@ -373,6 +387,7 @@ Create `.claude/agents/` directory for local agent definitions:
 mkdir -p .claude/agents
 mkdir -p .claude/skills
 ```
+*claude code by anubhav trainings*
 
 #### Step 2.3: Set Environment Variables
 ```bash
@@ -385,6 +400,7 @@ export CF_API_ENDPOINT="https://api.cf.your-region.hana.ondemand.com"
 export NODE_ENV="development"
 export ENABLE_CAP_DEBUG="true"
 ```
+*claude code by anubhav trainings*
 
 ### Phase 3: Validation
 
@@ -393,6 +409,7 @@ Ask Claude Code to perform an SAP CAP-specific task:
 ```
 "Create a new CAP service for inventory management"
 ```
+*claude code by anubhav trainings*
 This should automatically activate the `sap-cap-capire` plugin.
 
 #### Step 3.2: Verify Skills Loading
@@ -403,6 +420,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Reload if needed
 /reload-plugins
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -422,6 +440,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Initialize with SAP Fiori template
 /init-cap-project my-app --with-fiori-elements --ui5-version latest
 ```
+*claude code by anubhav trainings*
 
 **What It Does:**
 - Creates project directory structure
@@ -445,6 +464,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Validate CDS syntax
 /validate-cds
 ```
+*claude code by anubhav trainings*
 
 **Example Workflow:**
 ```bash
@@ -460,6 +480,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Step 4: Generate TypeScript types
 /generate-types
 ```
+*claude code by anubhav trainings*
 
 #### 3. Service Implementation Commands
 
@@ -476,6 +497,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Add field validation rules
 /add-validations BookshopService --entity Orders
 ```
+*claude code by anubhav trainings*
 
 #### 4. Deployment Commands
 
@@ -492,6 +514,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Check deployment status
 /deployment-status
 ```
+*claude code by anubhav trainings*
 
 #### 5. Testing & Validation Commands
 
@@ -508,6 +531,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Generate E2E test scenarios
 /generate-e2e-tests --service BookshopService
 ```
+*claude code by anubhav trainings*
 
 #### 6. UI/Fiori Commands
 
@@ -524,6 +548,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Preview Fiori application
 /fiori-preview books-app
 ```
+*claude code by anubhav trainings*
 
 #### 7. Code Quality Commands
 
@@ -540,6 +565,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Generate code documentation
 /generate-docs
 ```
+*claude code by anubhav trainings*
 
 #### 8. Database Commands
 
@@ -556,6 +582,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Export database data
 /db-export --format json --output data.json
 ```
+*claude code by anubhav trainings*
 
 #### 9. Hybrid Local Development Commands
 
@@ -572,6 +599,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Access local Fiori preview
 /open-localhost --port 4004
 ```
+*claude code by anubhav trainings*
 
 #### 10. Configuration & Info Commands
 
@@ -588,6 +616,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # Get detailed plugin information
 /plugin info sap-cap-capire
 ```
+*claude code by anubhav trainings*
 
 ### Command Invocation Patterns
 
@@ -602,6 +631,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 /test-cap-app
 /deploy-to-btp --org my-org --space dev
 ```
+*claude code by anubhav trainings*
 
 #### Pattern 2: Interactive Command Mode
 ```bash
@@ -614,6 +644,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 # - Database choice
 # - Deployment target
 ```
+*claude code by anubhav trainings*
 
 #### Pattern 3: Batch Operations
 ```bash
@@ -626,6 +657,7 @@ This should automatically activate the `sap-cap-capire` plugin.
 /generate-handlers BookService
 EOF
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -637,6 +669,7 @@ EOF
 ```bash
 /init-cap-project bookstore-app --use-typescript --with-fiori-elements --with-auth
 ```
+*claude code by anubhav trainings*
 
 #### Step 2: Define Data Model
 
@@ -739,6 +772,7 @@ entity InventoryLog : cuid, managed {
   timestamp      : DateTime default now();
 }
 ```
+*claude code by anubhav trainings*
 
 #### Step 3: Create Service Definition
 
@@ -772,6 +806,7 @@ service BookshopService {
   function getTopReviewedBooks(limit : Integer) returns array of Books;
 }
 ```
+*claude code by anubhav trainings*
 
 #### Step 4: Implement Service Handlers
 
@@ -1034,6 +1069,7 @@ class BookshopService extends cds.ApplicationService {
 
 module.exports = BookshopService;
 ```
+*claude code by anubhav trainings*
 
 #### Step 5: Generate Tests
 
@@ -1129,6 +1165,7 @@ describe('Bookshop Service', () => {
   });
 });
 ```
+*claude code by anubhav trainings*
 
 #### Step 6: Deploy to SAP BTP
 
@@ -1152,6 +1189,7 @@ applications:
       - bookstore-db
       - bookstore-uaa
 ```
+*claude code by anubhav trainings*
 
 **Deploy command:**
 ```bash
@@ -1161,6 +1199,7 @@ applications:
 # Monitor deployment
 /deployment-status
 ```
+*claude code by anubhav trainings*
 
 #### Step 7: Create Fiori UI
 
@@ -1196,6 +1235,7 @@ applications:
   }
 }
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -1214,6 +1254,7 @@ applications:
 # Check logs
 /plugin debug
 ```
+*claude code by anubhav trainings*
 
 #### Issue 2: Skills Not Activating
 **Problem:** Created skill but Claude doesn't use it.
@@ -1225,6 +1266,7 @@ applications:
 - Ensure description includes "when_to_use"
 - Reload: /reload-plugins
 ```
+*claude code by anubhav trainings*
 
 #### Issue 3: CAP Validation Errors
 ```bash
@@ -1236,6 +1278,7 @@ cds compile db/data-model.cds
 
 # Review error messages for syntax issues
 ```
+*claude code by anubhav trainings*
 
 #### Issue 4: Deployment Failures
 ```bash
@@ -1251,6 +1294,7 @@ cf services
 # View deployment logs
 cf logs <app-name>
 ```
+*claude code by anubhav trainings*
 
 ### Best Practices
 
@@ -1267,6 +1311,7 @@ cf logs <app-name>
 - Embed API keys in plugin files
 - Use overly complex directory structures
 ```
+*claude code by anubhav trainings*
 
 #### 2. **CAP Development**
 ```cds
@@ -1283,6 +1328,7 @@ cf logs <app-name>
 - Ignore timezone handling
 - Store sensitive data in models
 ```
+*claude code by anubhav trainings*
 
 #### 3. **Team Collaboration**
 ```json
@@ -1299,6 +1345,7 @@ cf logs <app-name>
 - gen/ directory
 - .DS_Store
 ```
+*claude code by anubhav trainings*
 
 #### 4. **Performance Optimization**
 ```javascript
@@ -1323,6 +1370,7 @@ for (const order of orders) {
   await cds.run(INSERT.into(Orders).entries(order));
 }
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -1335,6 +1383,7 @@ for (const order of orders) {
 /plugin list
 /reload-plugins
 ```
+*claude code by anubhav trainings*
 
 ### Project Commands
 ```bash
@@ -1343,6 +1392,7 @@ for (const order of orders) {
 /test-cap-app
 /deploy-to-btp
 ```
+*claude code by anubhav trainings*
 
 ### Modeling Commands
 ```bash
@@ -1351,6 +1401,7 @@ for (const order of orders) {
 /validate-cds
 /generate-types
 ```
+*claude code by anubhav trainings*
 
 ### Development Commands
 ```bash
@@ -1359,6 +1410,7 @@ for (const order of orders) {
 /lint-cds
 /format-code
 ```
+*claude code by anubhav trainings*
 
 ### Deployment Commands
 ```bash
@@ -1366,6 +1418,7 @@ for (const order of orders) {
 /deployment-status
 /rollback-deployment
 ```
+*claude code by anubhav trainings*
 
 ---
 

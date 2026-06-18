@@ -31,6 +31,7 @@ By the end of this guide, you'll know:
 
 # Done! Plugin is ready to use
 ```
+*claude code by anubhav trainings*
 
 **That's it!** The plugin is now active in your current session.
 
@@ -68,6 +69,7 @@ Contains many Plugins (Apps)
     ↓
 Each Plugin has Skills, Commands, Agents, Hooks, MCP Servers
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -77,6 +79,7 @@ Each Plugin has Skills, Commands, Agents, Hooks, MCP Servers
 ```bash
 /plugin
 ```
+*claude code by anubhav trainings*
 
 You'll see a tabbed interface:
 ```
@@ -88,6 +91,7 @@ You'll see a tabbed interface:
 │                                     │
 └─────────────────────────────────────┘
 ```
+*claude code by anubhav trainings*
 
 ### Step 2: Browse Available Plugins
 Navigate to the **Discover** tab:
@@ -95,6 +99,7 @@ Navigate to the **Discover** tab:
 # Press Tab key multiple times to reach "Discover" tab
 # Or click on the Discover tab
 ```
+*claude code by anubhav trainings*
 
 You'll see a list of available plugins with:
 - Plugin name
@@ -108,6 +113,7 @@ You'll see a list of available plugins with:
 ↑ ↓  = Move between plugins
 Enter = Select and view details
 ```
+*claude code by anubhav trainings*
 
 When you select a plugin, you'll see:
 ```
@@ -126,12 +132,14 @@ Status: Not installed
 ────────────────────────
 [ Install ] [ Cancel ]
 ```
+*claude code by anubhav trainings*
 
 ### Step 4: Install Plugin
 ```bash
 # Press Enter on "Install" button
 # Wait for confirmation message
 ```
+*claude code by anubhav trainings*
 
 ### Step 5: Verify Installation
 ```bash
@@ -141,6 +149,7 @@ Status: Not installed
 
 # You'll see your newly installed plugin listed
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -161,6 +170,7 @@ Status: Not installed
 # Uninstall plugin
 /plugin uninstall <plugin-name>
 ```
+*claude code by anubhav trainings*
 
 ### SAP Development Examples
 
@@ -179,6 +189,7 @@ Status: Not installed
 # Check what's installed
 /plugin list
 ```
+*claude code by anubhav trainings*
 
 ### Install Scopes
 
@@ -195,6 +206,7 @@ You can choose where to install a plugin:
 --scope user     → Installed in ~/.claude/plugins/
 --scope project  → Installed in .claude/plugins/ (versioned with your repo)
 ```
+*claude code by anubhav trainings*
 
 **Choose project scope if:**
 - You want to share the plugin setup with your team
@@ -217,12 +229,14 @@ For SAP skills, it's:
 ```
 https://github.com/secondsky/sap-skills
 ```
+*claude code by anubhav trainings*
 
 Other popular marketplaces:
 ```
 https://github.com/xiaolai/claude-plugin-marketplace
 https://github.com/anthropics/claude-plugins-community
 ```
+*claude code by anubhav trainings*
 
 ### Step 2: Add the Marketplace
 
@@ -234,11 +248,13 @@ https://github.com/anthropics/claude-plugins-community
 # Enter GitHub URL: https://github.com/secondsky/sap-skills
 # Press Enter
 ```
+*claude code by anubhav trainings*
 
 #### Option B: Using Command Line
 ```bash
 /plugin marketplace add https://github.com/secondsky/sap-skills
 ```
+*claude code by anubhav trainings*
 
 You'll see:
 ```
@@ -246,6 +262,7 @@ You'll see:
   URL: https://github.com/secondsky/sap-skills
   Plugins: 35 available
 ```
+*claude code by anubhav trainings*
 
 ### Step 3: Verify Marketplace Added
 
@@ -254,6 +271,7 @@ You'll see:
 # Go to "Marketplaces" tab
 # Should see: sap-skills (35 plugins)
 ```
+*claude code by anubhav trainings*
 
 ### Step 4: Now Install Plugins from This Marketplace
 
@@ -263,6 +281,7 @@ You'll see:
 /plugin install sap-btp-cloud-platform@sap-skills
 /plugin install sap-fiori-tools@sap-skills
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -287,6 +306,7 @@ Once installed, skills automatically activate based on context.
 
 # You just work normally - the skills guide Claude in the background
 ```
+*claude code by anubhav trainings*
 
 ### Using Plugin Commands
 
@@ -306,6 +326,7 @@ Commands are manually invoked with slash (/).
 /security-check       # Check for security issues
 /commit-message       # Generate git commit messages
 ```
+*claude code by anubhav trainings*
 
 ### How to Discover Available Commands
 
@@ -322,6 +343,7 @@ Commands are manually invoked with slash (/).
 # Go to "Installed" tab
 # Select a plugin to see its commands
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -340,6 +362,7 @@ Let me walk through a complete real-world example.
 cd /path/to/your/sap-project
 claude code  # or just open Claude Code
 ```
+*claude code by anubhav trainings*
 
 #### Step 2: Add SAP Skills Marketplace
 ```bash
@@ -351,6 +374,7 @@ claude code  # or just open Claude Code
 # Enter: https://github.com/secondsky/sap-skills
 # Press Enter
 ```
+*claude code by anubhav trainings*
 
 **Output:**
 ```
@@ -358,6 +382,7 @@ claude code  # or just open Claude Code
   URL: https://github.com/secondsky/sap-skills
   Available plugins: 35
 ```
+*claude code by anubhav trainings*
 
 #### Step 3: Browse Available SAP Plugins
 ```bash
@@ -372,6 +397,7 @@ claude code  # or just open Claude Code
   • sap-hana-cloud (8 skills)
   ... and 30 more
 ```
+*claude code by anubhav trainings*
 
 #### Step 4: Install Required Plugins
 ```bash
@@ -384,6 +410,7 @@ claude code  # or just open Claude Code
 /plugin install sap-abap-cds@sap-skills           # If using ABAP CDS
 /plugin install sap-hana-cloud@sap-skills         # If using HANA
 ```
+*claude code by anubhav trainings*
 
 #### Step 5: Verify Installation
 ```bash
@@ -397,6 +424,7 @@ claude code  # or just open Claude Code
   ✓ sap-abap-cds
   ✓ sap-hana-cloud
 ```
+*claude code by anubhav trainings*
 
 #### Step 6: Start Using Plugins
 ```bash
@@ -408,6 +436,7 @@ claude code  # or just open Claude Code
 # - Open package.json → CAP setup skills activate
 # - Work in srv/ → Service implementation skills activate
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -418,6 +447,7 @@ claude code  # or just open Claude Code
 ```bash
 /plugin list
 ```
+*claude code by anubhav trainings*
 
 Shows:
 ```
@@ -432,6 +462,7 @@ Marketplaces:
   • claude-plugins-official (33 plugins)
   • sap-skills (35 plugins)
 ```
+*claude code by anubhav trainings*
 
 ### Remove a Plugin
 
@@ -442,6 +473,7 @@ Marketplaces:
 # Remove marketplace
 /plugin marketplace remove sap-skills
 ```
+*claude code by anubhav trainings*
 
 ### Update Plugins
 
@@ -454,6 +486,7 @@ Currently, there's no auto-update feature. To update:
 # Reinstall latest
 /plugin install plugin-name@marketplace-name
 ```
+*claude code by anubhav trainings*
 
 ### Check Plugin Status
 
@@ -463,6 +496,7 @@ Currently, there's no auto-update feature. To update:
 
 # You'll see any plugin loading errors
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -479,6 +513,7 @@ Currently, there's no auto-update feature. To update:
 # Also available:
 # sap-abap-cds, sap-hana-cloud, sap-datasphere, sap-analytics-cloud
 ```
+*claude code by anubhav trainings*
 
 ### General Development (Official Anthropic)
 ```bash
@@ -493,6 +528,7 @@ Currently, there's no auto-update feature. To update:
 # UI/Frontend
 /plugin install frontend-design@claude-plugins-official
 ```
+*claude code by anubhav trainings*
 
 ### Community Plugins
 ```bash
@@ -504,6 +540,7 @@ Currently, there's no auto-update feature. To update:
 /plugin install tdd-guardian@xiaolai
 /plugin install echo-sleuth@xiaolai
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -520,6 +557,7 @@ These activate AUTOMATICALLY based on context
 - They guide Claude's responses
 - Example: CDS modeling skill activates when you edit .cds files
 ```
+*claude code by anubhav trainings*
 
 #### Commands ⌘
 ```
@@ -528,6 +566,7 @@ These are invoked MANUALLY with /
 - Example: /deploy-to-btp
 - You see them in autocomplete after /
 ```
+*claude code by anubhav trainings*
 
 #### Agents 🤖
 ```
@@ -536,6 +575,7 @@ These are specialized sub-agents for complex tasks
 - Handle specific workflows
 - Example: cap-architect agent specializes in CAP architecture
 ```
+*claude code by anubhav trainings*
 
 #### Hooks 🛡️
 ```
@@ -544,6 +584,7 @@ These run AUTOMATICALLY on events
 - No manual invocation needed
 - May impact performance if many hooks
 ```
+*claude code by anubhav trainings*
 
 #### MCP Servers 🔌
 ```
@@ -552,6 +593,7 @@ These integrate EXTERNAL SERVICES
 - Require authentication sometimes
 - Cost context (memory usage)
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -566,6 +608,7 @@ These integrate EXTERNAL SERVICES
 - Check GitHub repo for documentation
 - Review what the plugin does
 ```
+*claude code by anubhav trainings*
 
 ### 2. Plugin Scope Matters
 
@@ -578,6 +621,7 @@ These integrate EXTERNAL SERVICES
 /plugin install my-custom-tool --scope user
 # → Only on your machine
 ```
+*claude code by anubhav trainings*
 
 ### 3. Not Too Many Plugins
 
@@ -589,6 +633,7 @@ These integrate EXTERNAL SERVICES
 - Start with 3-5 core plugins
 - Add more as needed
 ```
+*claude code by anubhav trainings*
 
 ### 4. Keep Plugin List Updated
 
@@ -601,6 +646,7 @@ These integrate EXTERNAL SERVICES
 
 # This keeps things lean and fast
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -611,6 +657,7 @@ These integrate EXTERNAL SERVICES
 ```bash
 Error: Plugin "sap-cap-capire" not found in any marketplace
 ```
+*claude code by anubhav trainings*
 
 **Solution:**
 ```bash
@@ -620,12 +667,14 @@ Error: Plugin "sap-cap-capire" not found in any marketplace
 # Then try installing again
 /plugin install sap-cap-capire@sap-skills
 ```
+*claude code by anubhav trainings*
 
 ### Problem 2: Command Not Showing Up
 
 ```bash
 # After installing, plugin commands don't appear
 ```
+*claude code by anubhav trainings*
 
 **Solution:**
 ```bash
@@ -638,12 +687,14 @@ Error: Plugin "sap-cap-capire" not found in any marketplace
 # If still missing, check installation:
 /plugin list
 ```
+*claude code by anubhav trainings*
 
 ### Problem 3: Marketplace URL Invalid
 
 ```bash
 Error: Invalid marketplace URL
 ```
+*claude code by anubhav trainings*
 
 **Solution:**
 ```bash
@@ -655,12 +706,14 @@ Error: Invalid marketplace URL
 ✗ github.com/secondsky/sap-skills (missing https://)
 ✗ https://github.com/secondsky (missing repo name)
 ```
+*claude code by anubhav trainings*
 
 ### Problem 4: Slow Performance After Installing Plugins
 
 ```bash
 # Too many plugins or MCP servers?
 ```
+*claude code by anubhav trainings*
 
 **Solution:**
 ```bash
@@ -676,6 +729,7 @@ Error: Invalid marketplace URL
 
 # Keep only active plugins
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -719,6 +773,7 @@ Ask Claude Code directly:
 - SAP developer communities
 - GitHub discussions
 ```
+*claude code by anubhav trainings*
 
 ---
 
@@ -767,6 +822,7 @@ cd your-team-project
 git add .claude/settings.json
 git commit -m "Add CAP development plugins"
 ```
+*claude code by anubhav trainings*
 
 ### Tip 2: Create Your Own Marketplace
 If your organization has custom plugins, create a team marketplace:
@@ -795,6 +851,7 @@ Create `.claude/README.md`:
 - /deploy-to-btp
 - /create-fiori-app
 ```
+*claude code by anubhav trainings*
 
 ### Tip 4: Share Your Plugin Setup
 Create `.claude/settings.json` in your project:
@@ -815,6 +872,7 @@ Create `.claude/settings.json` in your project:
   ]
 }
 ```
+*claude code by anubhav trainings*
 
 When team members clone the project, plugins auto-load!
 
